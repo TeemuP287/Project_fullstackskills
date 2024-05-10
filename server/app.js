@@ -1,13 +1,23 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const app = express();
-const PORT = process.env.PORT || 3000; // Määritä portti, jonka Express-palvelin kuuntelee
+const PORT = process.env.PORT || 3000;
 
-// Määritä perustason reititys
-app.get('/', (req, res) => {
-  res.send('Tervetuloa Express-palvelimeen!');
+// Connect to MongoDB database
+mongoose.connect('mongodb://localhost:27017/myDatabase', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 });
 
-// Käynnistä Express-palvelin
+// Check for successful connection
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.once('open', () => {
+  console.log('Connected to MongoDB database');
+});
+
+// Define your routes and other server logic here
+
 app.listen(PORT, () => {
-  console.log(`Express-palvelin käynnissä portissa ${PORT}`);
+  console.log(`Express server running on port ${PORT}`);
 });
