@@ -1,42 +1,22 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Task } from '../models/Task'; // Olettaen, että olet luonut Task-mallin
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json'
-  })
-};
+import { HttpClient } from '@angular/common/http';
+import { Task } from '../models/Task';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
-  private apiUrl = 'http://localhost:3000/api/tasks'; // Korvaa oikealla palvelimesi osoitteella
-
   constructor(private http: HttpClient) { }
 
-  getTasks(): Observable<Task[]> {
-    return this.http.get<Task[]>(this.apiUrl);
+  getTasks(): any {
+    return this.http.get('/tasks');
   }
 
-  getTask(id: string): Observable<Task> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.get<Task>(url);
+  deleteTask(id: string): any {
+    return this.http.delete(`/tasks/${id}`);
   }
 
-  addTask(task: Task): Observable<Task> {
-    return this.http.post<Task>(this.apiUrl, task, httpOptions);
-  }
-
-  updateTask(task: Task): Observable<Task> {
-    const url = `${this.apiUrl}/${task.id}`;
-    return this.http.put<Task>(url, task, httpOptions);
-  }
-
-  deleteTask(id: string): Observable<Task> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.delete<Task>(url);
+  updateTask(task: Task): any {
+    return this.http.put(`/tasks/${task._id}`, task);
   }
 }

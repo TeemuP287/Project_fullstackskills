@@ -17,19 +17,19 @@ export class TaskListComponent implements OnInit {
   }
 
   getTasks(): void {
-    this.taskService.getTasks().subscribe((tasks) => {
+    this.taskService.getTasks().subscribe((tasks: Task[]) => {
       this.tasks = tasks;
     });
   }
 
   deleteTask(task: Task): void {
-    this.taskService.deleteTask(task.id).subscribe(() => {
-      this.tasks = this.tasks.filter(t => t.id !== task.id);
+    this.taskService.deleteTask(task._id).subscribe(() => {
+      this.tasks = this.tasks.filter(t => t._id!== task._id);
     });
   }
 
   toggleCompleted(task: Task): void {
-    task.completed = !task.completed;
+    task.completed =!task.completed;
     this.taskService.updateTask(task).subscribe();
   }
 }
