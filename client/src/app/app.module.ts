@@ -13,6 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     HttpClientModule
     // Lisää muita Angular-moduuleja tänne tarpeen mukaan
   ],
