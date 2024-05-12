@@ -5,13 +5,29 @@ const Task = require('../models/Task');
 
 // Reitti tehtävien listaukselle
 router.get('/', async (req, res) => {
-  // ...
+ 
+    const tasks = await Task.find();
+    res.json(tasks);
+
+    // ...
 });
 
 // Reitti tehtävän lisäämiselle
 router.post('/', async (req, res) => {
-  // ...
-});
+    const task = new Task({
+      title: req.body.title,
+      description: req.body.description,
+      completed: req.body.completed
+    });
+  
+    try {
+      const newTask = await task.save();
+      res.status(201).json(newTask);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  });
+  
 
 // Reitti tehtävän poistamiselle
 router.delete('/:id', async (req, res) => {
