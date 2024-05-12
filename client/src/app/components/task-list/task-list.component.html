@@ -4,11 +4,13 @@
   <ul class="task-list">
     <li *ngFor="let task of tasks | async" class="task-item">
       <div class="task-content">
-        <input type="checkbox" (change)="toggleTaskSelection(task._id)" [checked]="selectedTasks.has(task._id)">
+        <!-- Lisätty tarkistus _id:n olemassaololle ennen sen käyttöä -->
+        <input type="checkbox" (change)="task._id ? toggleTaskSelection(task._id) : null" [checked]="task._id ? selectedTasks.has(task._id) : false">
         <span class="task-title" [class.completed]="task.completed">{{ task.title }}</span>
       </div>
       <div class="task-actions">
-        <button (click)="deleteTask(task._id)" class="delete-btn">Poista</button>
+        <!-- Lisätty tarkistus _id:n olemassaololle ennen sen käyttöä -->
+        <button (click)="task._id ? deleteTask(task._id) : null" class="delete-btn">Poista</button>
         <button (click)="setActiveTask(task)" class="edit-btn">Muokkaa</button>
       </div>
     </li>
@@ -17,9 +19,8 @@
 </div>
 
 <!-- Muokkauslomakkeen dialogi -->
-<div *ngIf="activeTask" class="edit-form-dialog"> <!-- Tarkistetaan, että activeTask on olemassa -->
-  <h3 *ngIf="activeTask._id">Muokkaa Tehtävää</h3>
-  <h3 *ngIf="!activeTask._id">Lisää Uusi Tehtävä</h3>
+<div *ngIf="isEditFormVisible && activeTask" class="edit-form-dialog">
+  <h3>{{ activeTask._id ? 'Muokkaa Tehtävää' : 'Lisää Uusi Tehtävä' }}</h3>
   <form (ngSubmit)="saveTask()">
     <label for="title">Otsikko:</label>
     <input type="text" id="title" [(ngModel)]="activeTask.title" name="title" required>
@@ -28,6 +29,6 @@
     <textarea id="description" [(ngModel)]="activeTask.description" name="description" required></textarea>
 
     <button type="submit">{{ activeTask._id ? 'Tallenna' : 'Lisää' }}</button>
-    <button type="button" (click)="isEditFormVisible = false">Peruuta</button>
+    <button type="button" (click)="cancelEdit()">Peruuta</button>
   </form>
 </div>
