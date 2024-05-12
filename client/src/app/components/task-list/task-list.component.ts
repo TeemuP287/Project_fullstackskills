@@ -8,13 +8,8 @@ import { Task } from '../../models/Task';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
-setActiveTask(_t4: Task) {
-throw new Error('Method not implemented.');
-}
-editTask(_t4: Task) {
-throw new Error('Method not implemented.');
-}
   tasks: Task[] = [];
+  activeTask: Task | null = null; // Lisätty aktiivisen tehtävän tallentamiseen
 
   constructor(private taskService: TaskService) { }
 
@@ -28,17 +23,36 @@ throw new Error('Method not implemented.');
     });
   }
 
+  setActiveTask(task: Task): void {
+    this.activeTask = task; // Asettaa aktiivisen tehtävän
+  }
+
+  editTask(task: Task): void {
+    // Tässä voisi avata muokkauslomakkeen tai päivittää tehtävän suoraan
+    // Esimerkiksi:
+    // this.openEditForm(task);
+  }
+
   deleteTask(task: Task): void {
     this.taskService.deleteTask(task._id).subscribe(() => {
       this.tasks = this.tasks.filter(t => t._id !== task._id);
+    }, (error: any) => {
+      console.error('Virhe poistettaessa tehtävää:', error);
     });
   }
 
   toggleCompleted(task: Task): void {
     const updatedTask = { ...task, completed: !task.completed };
     this.taskService.updateTask(updatedTask).subscribe(() => {
-      // Päivitä tehtävien lista tässä, jos tarpeen
       this.tasks = this.tasks.map(t => t._id === task._id ? updatedTask : t);
+    }, (error: any) => {
+      console.error('Virhe päivittäessä tehtävän tilaa:', error);
     });
   }
+
+  // Lisää tarvittavat metodit ja logiikka täällä
+  // Esimerkiksi:
+  // openEditForm(task: Task): void {
+  //   // Avaa muokkauslomakkeen logiikka
+  // }
 }
