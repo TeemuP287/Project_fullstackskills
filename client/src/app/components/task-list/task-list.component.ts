@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/Task';
-import { Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-task-list',
@@ -27,8 +25,13 @@ export class TaskListComponent implements OnInit {
   }
 
   setActiveTask(task: Task): void {
-    this.activeTask = task;
-    this.isEditFormVisible = true;
+    // Jos muokkauslomake on jo auki samalle tehtävälle, sulje se
+    if (this.activeTask && this.activeTask._id === task._id) {
+      this.isEditFormVisible = !this.isEditFormVisible;
+    } else {
+      this.activeTask = task;
+      this.isEditFormVisible = true;
+    }
   }
 
   editTask(): void {
@@ -47,7 +50,13 @@ export class TaskListComponent implements OnInit {
     this.taskService.deleteTask(task._id).subscribe(() => {
       this.tasks = this.tasks.filter(t => t._id !== task._id);
     }, (error: any) => {
-      console.error('Virhe poistettaessa tehtävää:', error);
+      if (error.status === 404) {
+        console.error('Tehtävää ei löydy:', error.error);
+      } else if (error.status === 500) {
+        console.error('Palvelinvirhe:', error.error);
+      } else {
+        console.error('Virhe poistettaessa tehtävää:', error);
+      }
     });
   }
 
