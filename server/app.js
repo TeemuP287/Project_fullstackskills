@@ -3,7 +3,10 @@ const mongoose = require('mongoose');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const db = mongoose.connection;
+const taskRoutes = require('./routes/taskRoutes'); // Ota taskRoutes käyttöön
 
+
+app.use('/api/tasks', taskRoutes); // Liitä taskRoutes reitit sovellukseen
 // Connect to MongoDB database
 
 mongoose.connect('mongodb://localhost:27017/myDatabase', {
