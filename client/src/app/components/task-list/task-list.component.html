@@ -9,8 +9,23 @@
       </div>
       <div class="task-actions">
         <button (click)="deleteTask(task)" class="delete-btn">Poista</button>
-        <button (click)="editTask(task)" class="edit-btn">Muokkaa</button>
+        <button (click)="setActiveTask(task)" class="edit-btn">Muokkaa</button> <!-- Muutettu editTask -> setActiveTask -->
       </div>
     </li>
   </ul>
+</div>
+
+<!-- Muokkauslomakkeen dialogi -->
+<div *ngIf="isEditFormVisible" class="edit-form-dialog">
+  <h3>Muokkaa Tehtävää</h3>
+  <form (ngSubmit)="editTask(activeTask)">
+    <label for="title">Otsikko:</label>
+    <input type="text" id="title" [(ngModel)]="activeTask.title" name="title" required>
+
+    <label for="description">Kuvaus:</label>
+    <textarea id="description" [(ngModel)]="activeTask.description" name="description" required></textarea>
+
+    <button type="submit">Tallenna</button>
+    <button type="button" (click)="isEditFormVisible = false">Peruuta</button>
+  </form>
 </div>

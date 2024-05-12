@@ -9,7 +9,8 @@ import { Task } from '../../models/Task';
 })
 export class TaskListComponent implements OnInit {
   tasks: Task[] = [];
-  activeTask: Task | null = null; // Lisätty aktiivisen tehtävän tallentamiseen
+  activeTask: Task | null = null;
+  isEditFormVisible: boolean = false;
 
   constructor(private taskService: TaskService) { }
 
@@ -24,14 +25,22 @@ export class TaskListComponent implements OnInit {
   }
 
   setActiveTask(task: Task): void {
-    this.activeTask = task; // Asettaa aktiivisen tehtävän
+    this.activeTask = task;
+    this.isEditFormVisible = true;
   }
 
-  editTask(task: Task): void {
-    // Tässä voisi avata muokkauslomakkeen tai päivittää tehtävän suoraan
-    // Esimerkiksi:
-    // this.openEditForm(task);
+  editTask(): void {
+    if (this.activeTask) {
+      this.taskService.updateTask(this.activeTask).subscribe((updatedTask: Task) => {
+        this.tasks = this.tasks.map(t => t._id === updatedTask._id ? updatedTask : t);
+        this.isEditFormVisible = false;
+        this.activeTask = null; // Reset active task after editing
+      }, (error: any) => {
+        console.error('Virhe päivittäessä tehtävän tilaa:', error);
+      });
+    }
   }
+  
 
   deleteTask(task: Task): void {
     this.taskService.deleteTask(task._id).subscribe(() => {
@@ -49,10 +58,4 @@ export class TaskListComponent implements OnInit {
       console.error('Virhe päivittäessä tehtävän tilaa:', error);
     });
   }
-
-  // Lisää tarvittavat metodit ja logiikka täällä
-  // Esimerkiksi:
-  // openEditForm(task: Task): void {
-  //   // Avaa muokkauslomakkeen logiikka
-  // }
 }
