@@ -8,6 +8,12 @@ import { Task } from '../../models/Task';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
+setActiveTask(_t4: Task) {
+throw new Error('Method not implemented.');
+}
+editTask(_t4: Task) {
+throw new Error('Method not implemented.');
+}
   tasks: Task[] = [];
 
   constructor(private taskService: TaskService) { }
