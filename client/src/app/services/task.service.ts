@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Task } from '../models/Task';
@@ -12,8 +12,16 @@ export class TaskService {
 
   constructor(private http: HttpClient) { }
 
+  addTask(activeTask: Task): Observable<Task> {
+    return this.http.post<Task>(this.apiUrl, activeTask).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   getTasks(): Observable<Task[]> {
-    return this.http.get<Task[]>(this.apiUrl);
+    return this.http.get<Task[]>(this.apiUrl).pipe(
+      catchError(this.handleError)
+    );
   }
 
   deleteTask(id: string): Observable<any> {
@@ -28,7 +36,7 @@ export class TaskService {
     );
   }
 
-  private handleError(error: any) {
+  private handleError(error: HttpErrorResponse) {
     let errorMessage = 'An error occurred';
     if (error.error instanceof ErrorEvent) {
       // Client-side errors

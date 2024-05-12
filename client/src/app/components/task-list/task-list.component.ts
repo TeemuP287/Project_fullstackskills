@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/Task';
 
@@ -8,64 +10,101 @@ import { Task } from '../../models/Task';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
-  tasks: Task[] = [];
+  tasks: Observable<Task[]> | undefined;
+  selectedTasks: Set<string> = new Set();
   activeTask: Task | null = null;
   isEditFormVisible: boolean = false;
 
-  constructor(private taskService: TaskService) { }
+  constructor(private taskService: TaskService) {}
 
   ngOnInit(): void {
     this.getTasks();
   }
 
   getTasks(): void {
-    this.taskService.getTasks().subscribe((tasks: Task[]) => {
-      this.tasks = tasks;
-    });
+    this.tasks = this.taskService.getTasks();
   }
 
-  setActiveTask(task: Task): void {
-    // Jos muokkauslomake on jo auki samalle tehtävälle, sulje se
-    if (this.activeTask && this.activeTask._id === task._id) {
+  setActiveTask(task: Task | null): void {
+    if (task && this.activeTask && this.activeTask._id === task._id) {
       this.isEditFormVisible = !this.isEditFormVisible;
+      this.activeTask = this.isEditFormVisible ? task : null;
     } else {
       this.activeTask = task;
-      this.isEditFormVisible = true;
+      this.isEditFormVisible = !!task;
     }
   }
 
-  editTask(): void {
+  toggleTaskSelection(taskId: string): void {
+    if (this.selectedTasks.has(taskId)) {
+      this.selectedTasks.delete(taskId);
+    } else {
+      this.selectedTasks.add(taskId);
+    }
+  }
+
+  deleteSelectedTasks(): void {
+    this.selectedTasks.forEach(taskId => {
+      this.deleteTask(taskId);
+    });
+    this.selectedTasks.clear();
+  }
+
+  deleteTask(taskId: string): void {
+    this.taskService.deleteTask(taskId).subscribe(() => {
+      if (this.tasks) {
+        this.tasks = this.tasks.pipe(
+          map((tasks: Task[]) => tasks.filter((t: Task) => t._id !== taskId))
+        );
+      }
+    }, (error: any) => {
+      console.error('Error deleting task:', error);
+    });
+  }
+
+  addTask(): void {
     if (this.activeTask) {
-      this.taskService.updateTask(this.activeTask).subscribe((updatedTask: Task) => {
-        this.tasks = this.tasks.map(t => t._id === updatedTask._id ? updatedTask : t);
+      this.taskService.addTask(this.activeTask).subscribe((newTask: Task) => {
+        if (this.tasks) {
+          this.tasks = this.tasks.pipe(
+            map((tasks: Task[]) => [...tasks, newTask])
+          );
+        }
         this.isEditFormVisible = false;
-        this.activeTask = null; // Reset active task after editing
+        this.activeTask = null;
       }, (error: any) => {
-        console.error('Virhe päivittäessä tehtävän tilaa:', error);
+        console.error('Error adding new task:', error);
       });
     }
   }
 
-  deleteTask(task: Task): void {
-    this.taskService.deleteTask(task._id).subscribe(() => {
-      this.tasks = this.tasks.filter(t => t._id !== task._id);
-    }, (error: any) => {
-      if (error.status === 404) {
-        console.error('Tehtävää ei löydy:', error.error);
-      } else if (error.status === 500) {
-        console.error('Palvelinvirhe:', error.error);
+  saveTask(): void {
+    if (this.activeTask) {
+      if (this.activeTask._id) {
+        this.taskService.updateTask(this.activeTask).subscribe((updatedTask: Task) => {
+          if (this.tasks) {
+            this.tasks = this.tasks.pipe(
+              map((tasks: Task[]) => tasks.map((t: Task) => t._id === updatedTask._id ? updatedTask : t))
+            );
+          }
+          this.isEditFormVisible = false;
+          this.activeTask = null;
+        }, (error: any) => {
+          console.error('Error updating task:', error);
+        });
       } else {
-        console.error('Virhe poistettaessa tehtävää:', error);
+        this.taskService.addTask(this.activeTask).subscribe((newTask: Task) => {
+          if (this.tasks) {
+            this.tasks = this.tasks.pipe(
+              map((tasks: Task[]) => [...tasks, newTask])
+            );
+          }
+          this.isEditFormVisible = false;
+          this.activeTask = null;
+        }, (error: any) => {
+          console.error('Error adding new task:', error);
+        });
       }
-    });
-  }
-
-  toggleCompleted(task: Task): void {
-    const updatedTask = { ...task, completed: !task.completed };
-    this.taskService.updateTask(updatedTask).subscribe(() => {
-      this.tasks = this.tasks.map(t => t._id === task._id ? updatedTask : t);
-    }, (error: any) => {
-      console.error('Virhe päivittäessä tehtävän tilaa:', error);
-    });
+    }
   }
 }
