@@ -1,1 +1,14 @@
-<p>task-list works!</p>
+<div *ngIf="tasks.length > 0; else noTasksTemplate">
+    <ul>
+      <li *ngFor="let task of tasks">
+        <input type="checkbox" [checked]="task.completed" (click)="toggleCompleted(task)">
+        {{ task.title }}
+        <button (click)="deleteTask(task)">Poista</button>
+      </li>
+    </ul>
+  </div>
+  
+  <ng-template #noTasksTemplate>
+    <p>Ei tehtäviä listalla.</p>
+  </ng-template>
+  
