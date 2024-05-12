@@ -24,13 +24,15 @@ export class TaskListComponent implements OnInit {
 
   deleteTask(task: Task): void {
     this.taskService.deleteTask(task._id).subscribe(() => {
-      this.tasks = this.tasks.filter(t => t._id!== task._id);
+      this.tasks = this.tasks.filter(t => t._id !== task._id);
     });
   }
 
   toggleCompleted(task: Task): void {
-    task.completed =!task.completed;
-    this.taskService.updateTask(task).subscribe();
+    const updatedTask = { ...task, completed: !task.completed };
+    this.taskService.updateTask(updatedTask).subscribe(() => {
+      // Päivitä tehtävien lista tässä, jos tarpeen
+      this.tasks = this.tasks.map(t => t._id === task._id ? updatedTask : t);
+    });
   }
 }
-
