@@ -9,16 +9,16 @@
       </div>
       <div class="task-actions">
         <button (click)="deleteTask(task)" class="delete-btn">Poista</button>
-        <button (click)="setActiveTask(task)" class="edit-btn">Muokkaa</button> <!-- Muutettu editTask -> setActiveTask -->
+        <button (click)="setActiveTask(task)" class="edit-btn">Muokkaa</button>
       </div>
     </li>
   </ul>
 </div>
 
 <!-- Muokkauslomakkeen dialogi -->
-<div *ngIf="isEditFormVisible" class="edit-form-dialog">
+<div *ngIf="isEditFormVisible && activeTask" class="edit-form-dialog">
   <h3>Muokkaa Tehtävää</h3>
-  <form (ngSubmit)="editTask(activeTask)">
+  <form (ngSubmit)="editTask()">
     <label for="title">Otsikko:</label>
     <input type="text" id="title" [(ngModel)]="activeTask.title" name="title" required>
 

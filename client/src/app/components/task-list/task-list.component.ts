@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/Task';
+import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-task-list',
@@ -40,7 +42,6 @@ export class TaskListComponent implements OnInit {
       });
     }
   }
-  
 
   deleteTask(task: Task): void {
     this.taskService.deleteTask(task._id).subscribe(() => {
