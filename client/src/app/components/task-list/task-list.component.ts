@@ -66,7 +66,7 @@ export class TaskListComponent implements OnInit {
       this.isEditFormVisible = true;
     }
     // Asetetaan laskuri nollaan jos ei ole tuplaklikattu ajoissa.
-    setTimeout(() => this.editClickCount = 0, 100);
+    setTimeout(() => this.editClickCount = 0, 150);
   }
 
   addNewTask(): void {

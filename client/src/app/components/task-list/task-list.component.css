@@ -1,56 +1,105 @@
 /* task-list.component.css */
 
 .task-container {
-    margin: 0 auto;
-    max-width: 600px;
-  }
-  
-  .task-list {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .task-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    padding: 10px;
-    background-color: #f9f9f9;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .task-content {
-    display: flex;
-    align-items: center;
-  }
-  
-  .task-title {
-    margin-left: 10px;
-  }
-  
-  .task-title.completed {
-    text-decoration: line-through;
-    color: #999;
-  }
-  
-  .task-actions .delete-btn,
-  .task-actions .edit-btn {
-    margin-left: 10px;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .delete-btn {
-    background-color: #ff6b6b;
-    color: white;
-  }
-  
-  .edit-btn {
-    background-color: #4ecdc4;
-    color: white;
-  }
-  
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+}
+
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.task-content {
+  display: flex;
+  align-items: center;
+}
+
+.task-title {
+  margin-left: 10px;
+}
+
+.task-title.completed {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.task-actions .delete-btn,
+.task-actions .edit-btn {
+  margin-left: 10px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete-btn {
+  background-color: #ff6b6b;
+  color: white;
+}
+
+.edit-btn {
+  background-color: #4ecdc4;
+  color: white;
+}
+
+/* Muokkauslomakkeen dialogin tyylit */
+.edit-form-dialog {
+  margin: 0 auto;
+  max-width: 600px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.edit-form-dialog h3 {
+  margin-bottom: 10px;
+}
+
+.edit-form-dialog form {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-form-dialog label {
+  margin-top: 10px;
+}
+
+.edit-form-dialog input[type="text"],
+.edit-form-dialog textarea {
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.edit-form-dialog .save-btn,
+.edit-form-dialog .cancel-btn {
+  padding: 5px 10px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit-form-dialog .save-btn {
+  background-color: #4ecdc4;
+  color: white;
+}
+
+.edit-form-dialog .cancel-btn {
+  background-color: #ff6b6b;
+  color: white;
+}
