@@ -1,17 +1,16 @@
+<!-- task-list.component.html -->
 <button (click)="showAddTaskForm()" class="add-task-btn">Lisää tehtävä</button>
 
 <div class="task-container">
   <ul class="task-list">
     <li *ngFor="let task of tasks | async" class="task-item">
       <div class="task-content">
-        <!-- Lisätty tarkistus _id:n olemassaololle ennen sen käyttöä -->
         <input type="checkbox" (change)="task._id ? toggleTaskSelection(task._id) : null" [checked]="task._id ? selectedTasks.has(task._id) : false">
         <span class="task-title" [class.completed]="task.completed">{{ task.title }}</span>
       </div>
       <div class="task-actions">
-        <!-- Lisätty tarkistus _id:n olemassaololle ennen sen käyttöä -->
         <button (click)="task._id ? deleteTask(task._id) : null" class="delete-btn">Poista</button>
-        <button (click)="setActiveTask(task)" class="edit-btn">Muokkaa</button>
+        <button (click)="setActiveTask(task)" (dblclick)="setActiveTask(task)" class="edit-btn">Muokkaa</button>
       </div>
     </li>
   </ul>

@@ -14,6 +14,7 @@ export class TaskListComponent implements OnInit {
   activeTask: Task | null = null;
   tasks: Observable<Task[]> | undefined;
   selectedTasks: Set<string> = new Set();
+  editClickCount: number = 0; // Lisätty laskuri tuplaklikkausta varten
 
   constructor(private taskService: TaskService) {}
 
@@ -52,8 +53,20 @@ export class TaskListComponent implements OnInit {
   }
 
   setActiveTask(task: Task): void {
-    this.activeTask = task;
-    this.isEditFormVisible = true;
+    // Tarkistetaan, onko muokkausnappia painettu kahdesti
+    if (this.activeTask && this.activeTask._id === task._id) {
+      this.editClickCount++;
+      if (this.editClickCount === 2) {
+        this.cancelEdit();
+        this.editClickCount = 0; // Nollataan laskuri
+      }
+    } else {
+      this.editClickCount = 1; // Aloitetaan laskenta uudelle tehtävälle
+      this.activeTask = task;
+      this.isEditFormVisible = true;
+    }
+    // Asetetaan laskuri nollaan jos ei ole tuplaklikattu ajoissa.
+    setTimeout(() => this.editClickCount = 0, 100);
   }
 
   addNewTask(): void {
