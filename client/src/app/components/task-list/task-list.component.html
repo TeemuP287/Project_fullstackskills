@@ -1,8 +1,7 @@
-<button (click)="addTask()" class="add-task-btn">Lisää tehtävä</button>
+<button (click)="showAddTaskForm()" class="add-task-btn">Lisää tehtävä</button>
 
 <div class="task-container">
   <ul class="task-list">
-
     <li *ngFor="let task of tasks | async" class="task-item">
       <div class="task-content">
         <!-- Lisätty tarkistus _id:n olemassaololle ennen sen käyttöä -->
@@ -22,14 +21,14 @@
 <!-- Muokkauslomakkeen dialogi -->
 <div *ngIf="isEditFormVisible && activeTask" class="edit-form-dialog">
   <h3>{{ activeTask._id ? 'Muokkaa Tehtävää' : 'Lisää Uusi Tehtävä' }}</h3>
-  <form (ngSubmit)="saveTask()">
+  <form (ngSubmit)="activeTask._id ? updateTask() : addNewTask()">
     <label for="title">Otsikko:</label>
     <input type="text" id="title" [(ngModel)]="activeTask.title" name="title" required>
 
     <label for="description">Kuvaus:</label>
     <textarea id="description" [(ngModel)]="activeTask.description" name="description" required></textarea>
 
-    <button type="submit">{{ activeTask._id ? 'Tallenna' : 'Lisää' }}</button>
-    <button type="button" (click)="cancelEdit()">Peruuta</button>
+    <button type="submit" class="save-btn">{{ activeTask._id ? 'Tallenna' : 'Lisää' }}</button>
+    <button type="button" (click)="cancelEdit()" class="cancel-btn">Peruuta</button>
   </form>
 </div>

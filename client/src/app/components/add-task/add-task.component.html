@@ -1,1 +1,13 @@
-<p>add-task works!</p>
+<div class="add-task-form">
+    <h3>Lisää Uusi Tehtävä</h3>
+    <form (ngSubmit)="addTask()">
+      <label for="title">Otsikko:</label>
+      <input type="text" id="title" [(ngModel)]="newTask.title" name="title" required>
+  
+      <label for="description">Kuvaus:</label>
+      <textarea id="description" [(ngModel)]="newTask.description" name="description" required></textarea>
+  
+      <button type="submit" class="add-btn">Lisää</button>
+    </form>
+  </div>
+  

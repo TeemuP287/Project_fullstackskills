@@ -6,15 +6,21 @@ import { TaskListComponent } from './components/task-list/task-list.component';
 import { TaskService } from './services/task.service';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
+import { AddTaskComponent } from './components/add-task/add-task.component';
+//import { EditTaskComponent } from './components/edit-task/edit-task.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    TaskListComponent
+    TaskListComponent,
+    AddTaskComponent,
+    //EditTaskComponent
     // Lisää muita komponentteja tänne tarpeen mukaan
   ],
   imports: [
     BrowserModule,
+    
     AppRoutingModule,
     FormsModule,
     HttpClientModule

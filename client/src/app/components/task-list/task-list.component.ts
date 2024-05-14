@@ -1,3 +1,4 @@
+// task-list.component.ts
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TaskService } from '../../services/task.service';
@@ -9,10 +10,10 @@ import { Task } from '../../models/Task';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
+  isEditFormVisible: boolean = false;
+  activeTask: Task | null = null;
   tasks: Observable<Task[]> | undefined;
   selectedTasks: Set<string> = new Set();
-  activeTask: Task | null = null;
-  isEditFormVisible: boolean = false;
 
   constructor(private taskService: TaskService) {}
 
@@ -24,17 +25,18 @@ export class TaskListComponent implements OnInit {
     this.tasks = this.taskService.getTasks();
   }
 
-  setActiveTask(task: Task | null): void {
-    this.activeTask = task;
-    this.isEditFormVisible = !!task;
-  }
-
   toggleTaskSelection(taskId: string): void {
     if (this.selectedTasks.has(taskId)) {
       this.selectedTasks.delete(taskId);
     } else {
       this.selectedTasks.add(taskId);
     }
+  }
+
+  deleteTask(taskId: string): void {
+    this.taskService.deleteTask(taskId).subscribe(() => {
+      this.getTasks();
+    });
   }
 
   deleteSelectedTasks(): void {
@@ -44,44 +46,42 @@ export class TaskListComponent implements OnInit {
     this.selectedTasks.clear();
   }
 
-  deleteTask(taskId: string): void {
-    this.taskService.deleteTask(taskId).subscribe(() => {
-      this.getTasks();
-    }, (error: any) => {
-      console.error('Error deleting task:', error);
-    });
+  showAddTaskForm(): void {
+    this.isEditFormVisible = true;
+    this.activeTask = { _id: '', title: '', description: '', completed: false, day: '', reminder: false };
   }
 
-  addTask(): void {
-    // Alustetaan uusi tehtävä, varmista että _id on tyypiltään 'string | null'
-    this.activeTask = { title: '', description: '', _id: null, completed: false };
+  setActiveTask(task: Task): void {
+    this.activeTask = task;
     this.isEditFormVisible = true;
   }
 
-  saveTask(): void {
+  addNewTask(): void {
     if (this.activeTask) {
-      if (this.activeTask._id) {
-        this.taskService.updateTask(this.activeTask).subscribe(() => {
-          this.getTasks();
-          this.isEditFormVisible = false;
-          this.activeTask = null;
-        }, (error: any) => {
-          console.error('Error updating task:', error);
-        });
-      } else {
-        this.taskService.addTask(this.activeTask).subscribe((newTask: Task) => {
-          this.getTasks();
-          this.isEditFormVisible = false;
-          this.activeTask = null;
-        }, (error: any) => {
-          console.error('Error adding new task:', error);
-        });
-      }
+      this.taskService.addTask(this.activeTask).subscribe(() => {
+        this.getTasks();
+        this.isEditFormVisible = false;
+        this.activeTask = null;
+      }, (error: any) => {
+        console.error('Error adding new task:', error);
+      });
+    }
+  }
+
+  updateTask(): void {
+    if (this.activeTask && this.activeTask._id) {
+      this.taskService.updateTask(this.activeTask).subscribe(() => {
+        this.getTasks();
+        this.isEditFormVisible = false;
+        this.activeTask = null;
+      }, (error: any) => {
+        console.error('Error updating task:', error);
+      });
     }
   }
 
   cancelEdit(): void {
-    this.activeTask = null;
     this.isEditFormVisible = false;
+    this.activeTask = null;
   }
 }
