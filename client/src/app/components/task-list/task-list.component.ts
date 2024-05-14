@@ -1,6 +1,6 @@
-// task-list.component.ts
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/Task';
 
@@ -14,12 +14,25 @@ export class TaskListComponent implements OnInit {
   activeTask: Task | null = null;
   tasks: Observable<Task[]> | undefined;
   selectedTasks: Set<string> = new Set();
-  editClickCount: number = 0; // Lisätty laskuri tuplaklikkausta varten
+
+// Subject for debouncing click events
+  private editClickSubject = new Subject<{ task: Task }>(); 
 
   constructor(private taskService: TaskService) {}
 
   ngOnInit(): void {
     this.getTasks();
+
+    // debounceTime to avoid handling too quick successive clicks
+    this.editClickSubject.pipe(debounceTime(150)).subscribe(({ task }) => {
+      // Toggle the form if the same task is clicked
+      if (this.activeTask && this.activeTask._id === task._id) {
+        this.cancelEdit(); // Close the form
+      } else {
+        this.activeTask = task;
+        this.isEditFormVisible = true; // Open the form
+      }
+    });
   }
 
   getTasks(): void {
@@ -53,20 +66,7 @@ export class TaskListComponent implements OnInit {
   }
 
   setActiveTask(task: Task): void {
-    // Tarkistetaan, onko muokkausnappia painettu kahdesti
-    if (this.activeTask && this.activeTask._id === task._id) {
-      this.editClickCount++;
-      if (this.editClickCount === 2) {
-        this.cancelEdit();
-        this.editClickCount = 0; // Nollataan laskuri
-      }
-    } else {
-      this.editClickCount = 1; // Aloitetaan laskenta uudelle tehtävälle
-      this.activeTask = task;
-      this.isEditFormVisible = true;
-    }
-    // Asetetaan laskuri nollaan jos ei ole tuplaklikattu ajoissa.
-    setTimeout(() => this.editClickCount = 0, 150);
+    this.editClickSubject.next({ task }); // Send the click event to the Subject
   }
 
   addNewTask(): void {
