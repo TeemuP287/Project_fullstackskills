@@ -12,25 +12,27 @@ import { Task } from '../../models/Task';
 export class TaskListComponent implements OnInit {
   isEditFormVisible: boolean = false;
   activeTask: Task | null = null;
+  originalTask: Task | null = null; // Alkuperäisen muokattavan tehtävän tila
   tasks: Observable<Task[]> | undefined;
   selectedTasks: Set<string> = new Set();
 
-// Subject for debouncing click events
-  private editClickSubject = new Subject<{ task: Task }>(); 
+  private editClickSubject = new Subject<{ task: Task }>();
 
   constructor(private taskService: TaskService) {}
 
   ngOnInit(): void {
     this.getTasks();
 
-    // debounceTime to avoid handling too quick successive clicks
     this.editClickSubject.pipe(debounceTime(150)).subscribe(({ task }) => {
-      // Toggle the form if the same task is clicked
-      if (this.activeTask && this.activeTask._id === task._id) {
-        this.cancelEdit(); // Close the form
+      if (this.activeTask && this.activeTask._id === task._id && this.isEditFormVisible) {
+        this.isEditFormVisible = false;
       } else {
-        this.activeTask = task;
-        this.isEditFormVisible = true; // Open the form
+        
+        if (!this.activeTask || this.activeTask._id !== task._id) {
+          this.originalTask = { ...task };
+          this.activeTask = { ...task }; 
+        }
+        this.isEditFormVisible = true; // Avaa lomake
       }
     });
   }
@@ -66,7 +68,7 @@ export class TaskListComponent implements OnInit {
   }
 
   setActiveTask(task: Task): void {
-    this.editClickSubject.next({ task }); // Send the click event to the Subject
+    this.editClickSubject.next({ task }); // Lähetä klikkaustapahtuma 
   }
 
   addNewTask(): void {
@@ -75,6 +77,7 @@ export class TaskListComponent implements OnInit {
         this.getTasks();
         this.isEditFormVisible = false;
         this.activeTask = null;
+        this.originalTask = null; // Tyhjennä originalTask tallennuksen jälkeen
       }, (error: any) => {
         console.error('Error adding new task:', error);
       });
@@ -87,6 +90,7 @@ export class TaskListComponent implements OnInit {
         this.getTasks();
         this.isEditFormVisible = false;
         this.activeTask = null;
+        this.originalTask = null; // Tyhjennä originalTask tallennuksen jälkeen
       }, (error: any) => {
         console.error('Error updating task:', error);
       });
@@ -94,7 +98,9 @@ export class TaskListComponent implements OnInit {
   }
 
   cancelEdit(): void {
+    if (this.originalTask) {
+      this.activeTask = { ...this.originalTask }; // Palauta alkuperäinen tehtävä
+    }
     this.isEditFormVisible = false;
-    this.activeTask = null;
   }
 }
