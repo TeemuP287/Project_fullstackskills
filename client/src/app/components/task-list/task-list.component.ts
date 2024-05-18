@@ -10,11 +10,15 @@ import { Task } from '../../models/Task';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
+toggleTaskCompleted(_t6: Task) {
+throw new Error('Method not implemented.');
+}
   isEditFormVisible: boolean = false;
   activeTask: Task | null = null;
-  originalTask: Task | null = null; // Alkuperäisen muokattavan tehtävän tila
+  originalTask: Task | null = null;
   tasks: Observable<Task[]> | undefined;
   selectedTasks: Set<string> = new Set();
+  hoveredTaskId: string | null = null; // Uusi muuttuja kuvauksen näyttämiseen
 
   private editClickSubject = new Subject<{ task: Task }>();
 
@@ -27,12 +31,11 @@ export class TaskListComponent implements OnInit {
       if (this.activeTask && this.activeTask._id === task._id && this.isEditFormVisible) {
         this.isEditFormVisible = false;
       } else {
-        
         if (!this.activeTask || this.activeTask._id !== task._id) {
           this.originalTask = { ...task };
           this.activeTask = { ...task }; 
         }
-        this.isEditFormVisible = true; // Avaa lomake
+        this.isEditFormVisible = true;
       }
     });
   }
@@ -41,11 +44,25 @@ export class TaskListComponent implements OnInit {
     this.tasks = this.taskService.getTasks();
   }
 
-  toggleTaskSelection(taskId: string): void {
-    if (this.selectedTasks.has(taskId)) {
+  toggleTaskSelection(taskId: string | null): void {
+    if (taskId && this.selectedTasks.has(taskId)) {
       this.selectedTasks.delete(taskId);
-    } else {
+    } else if (taskId) {
       this.selectedTasks.add(taskId);
+    }
+  }
+
+  deleteTaskConfirmation(task: Task): void {
+    const confirmDelete = confirm(`Haluatko varmasti poistaa tehtävän "${task.title}"?`);
+    if (confirmDelete && task._id) {
+      this.deleteTask(task._id);
+    }
+  }
+
+  deleteSelectedTasksConfirmation(): void {
+    const confirmDelete = confirm('Haluatko varmasti poistaa kaikki valitut tehtävät?');
+    if (confirmDelete) {
+      this.deleteSelectedTasks();
     }
   }
 
@@ -57,49 +74,67 @@ export class TaskListComponent implements OnInit {
 
   deleteSelectedTasks(): void {
     this.selectedTasks.forEach(taskId => {
-      this.deleteTask(taskId);
+      if (taskId) {
+        this.deleteTask(taskId);
+      }
     });
     this.selectedTasks.clear();
   }
 
   showAddTaskForm(): void {
     this.isEditFormVisible = true;
-    this.activeTask = { _id: '', title: '', description: '', completed: false, day: '', reminder: false };
+    this.activeTask = Task.createDefaultTask();
   }
 
   setActiveTask(task: Task): void {
-    this.editClickSubject.next({ task }); // Lähetä klikkaustapahtuma 
+    this.editClickSubject.next({ task });
+  }
+
+  hoverTask(taskId: string | null): void { // Uusi metodi
+    this.hoveredTaskId = taskId;
   }
 
   addNewTask(): void {
     if (this.activeTask) {
+      this.activeTask.created_at = new Date();
+      this.activeTask.updated_at = null;
       this.taskService.addTask(this.activeTask).subscribe(() => {
         this.getTasks();
         this.isEditFormVisible = false;
         this.activeTask = null;
-        this.originalTask = null; // Tyhjennä originalTask tallennuksen jälkeen
+        this.originalTask = null;
       }, (error: any) => {
-        console.error('Error adding new task:', error);
+        console.error('Virhe lisättäessä uutta tehtävää:', error);
       });
     }
   }
 
   updateTask(): void {
     if (this.activeTask && this.activeTask._id) {
+      const isTaskModified = this.activeTask.title !== this.originalTask?.title ||
+                             this.activeTask.description !== this.originalTask?.description ||
+                             this.activeTask.completed !== this.originalTask?.completed; // Lisätty completed
+      
+      if (isTaskModified) {
+        this.activeTask.updated_at = new Date();
+      } else {
+        this.activeTask.updated_at = null;
+      }
+      
       this.taskService.updateTask(this.activeTask).subscribe(() => {
         this.getTasks();
         this.isEditFormVisible = false;
         this.activeTask = null;
-        this.originalTask = null; // Tyhjennä originalTask tallennuksen jälkeen
+        this.originalTask = null;
       }, (error: any) => {
-        console.error('Error updating task:', error);
+        console.error('Virhe päivitettäessä tehtävää:', error);
       });
     }
   }
 
   cancelEdit(): void {
     if (this.originalTask) {
-      this.activeTask = { ...this.originalTask }; // Palauta alkuperäinen tehtävä
+      this.activeTask = { ...this.originalTask };
     }
     this.isEditFormVisible = false;
   }

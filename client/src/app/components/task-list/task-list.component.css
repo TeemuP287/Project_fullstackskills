@@ -1,5 +1,3 @@
-/* task-list.component.css */
-
 .task-container {
   margin: 0 auto;
   max-width: 600px;
@@ -12,8 +10,7 @@
 
 .task-item {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   margin-bottom: 10px;
   padding: 10px;
   background-color: #f9f9f9;
@@ -23,20 +20,52 @@
 
 .task-content {
   display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 
 .task-title {
-  margin-left: 10px;
+  flex: 1;
+  font-size: 1.1em;
+  margin: 0 10px 10px 0;
+  font-weight: 500;
 }
 
-.task-title.completed {
-  text-decoration: line-through;
-  color: #999;
+.task-status-text {
+  font-size: 0.9em;
+  margin-top: 5px;
+  margin-right: 15px; /*  lisätty oikea marginaali */
+  width: 100px; /*  kiinteä leveys */
+  text-align: center; /* keskitetty teksti */
 }
 
-.task-actions .delete-btn,
-.task-actions .edit-btn {
+.status-completed {
+  color: green;
+}
+
+.status-incomplete {
+  color: red;
+}
+
+.task-dates {
+  margin-left: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.task-dates small {
+  color: #666;
+  font-size: 0.85em;
+}
+
+.task-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.task-actions button {
   margin-left: 10px;
   padding: 5px 10px;
   border: none;
@@ -44,27 +73,30 @@
   cursor: pointer;
 }
 
-
-.add-task-btn, .delete-selected-btn {
-  padding: 5px 10px;
+.add-task-btn,
+.delete-selected-btn,
+.edit-btn,
+.delete-btn,
+.cancel-btn,
+.save-btn {
+  padding: 10px 20px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  background-color: #4ecdc4; /*  */
+  margin-top: 10px;
+  width: 100%;
+  text-align: center;
+}
+
+.add-task-btn,
+.save-btn {
+  background-color: #4ecdc4;
   color: white;
-  margin: 10px 0;
-  font-size: 16px;
 }
 
-.add-task-btn {
-  background-color: #4ecdc4; /*  */
-}
-
-.delete-selected-btn {
-  background-color: #ff6b6b; /*  */
-}
-
-.delete-btn {
+.delete-selected-btn,
+.delete-btn,
+.cancel-btn {
   background-color: #ff6b6b;
   color: white;
 }
@@ -74,12 +106,16 @@
   color: white;
 }
 
-/* Muokkaus- ja lisäyslomakkeen tyylit */
+.delete-btn {
+  background-color: #ff6b6b;
+  color: white;
+}
+
 .edit-form-dialog,
 .add-task-form {
   margin: 0 auto;
   max-width: 600px;
-  padding: 10px;
+  padding: 20px;
   background-color: #f9f9f9;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -87,7 +123,8 @@
 
 .edit-form-dialog h3,
 .add-task-form h3 {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  font-size: 1.4em;
 }
 
 .edit-form-dialog form,
@@ -98,7 +135,7 @@
 
 .edit-form-dialog label,
 .add-task-form label {
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .edit-form-dialog input[type="text"],
@@ -111,25 +148,9 @@
   border-radius: 4px;
 }
 
-.edit-form-dialog .save-btn,
-.edit-form-dialog .cancel-btn,
-.add-task-form .save-btn,
-.add-task-form .cancel-btn {
-  padding: 5px 10px;
+.task-description {
   margin-top: 10px;
-  border: none;
+  padding: 10px;
+  background-color: #e0f7fa;
   border-radius: 4px;
-  cursor: pointer;
-}
-
-.edit-form-dialog .save-btn,
-.add-task-form .save-btn {
-  background-color: #4ecdc4;
-  color: white;
-}
-
-.edit-form-dialog .cancel-btn,
-.add-task-form .cancel-btn {
-  background-color: #ff6b6b;
-  color: white;
 }

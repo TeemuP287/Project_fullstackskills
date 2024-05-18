@@ -1,18 +1,14 @@
-<!-- task-item.component.html -->
 <div class="task-item" *ngIf="task">
-    <div class="task-content">
-      <!-- Käytä 'ngIf' direktiiviä varmistamaan, että 'task._id' ei ole 'null' -->
-      <!--<input type="checkbox" [checked]="selectedTasks.has(task._id)" (change)="task._id ? toggleTaskSelection(task._id) : null"> -->
-      <input type="checkbox" (change)="task._id ? toggleTaskSelection(task._id) : null" [checked]="task._id ? selectedTasks.has(task._id) : false">
-
-      <label for="task-title"></label>
-      
-
-      <span class="task-title" [class.completed]="task.completed">{{ task.title }}</span>
+  <div class="task-content">
+    <input type="checkbox" (change)="task._id ? toggleTaskSelection(task._id) : null" [checked]="task._id ? selectedTasks.has(task._id) : false">
+    <span class="task-title" [class.completed]="task.completed">{{ task.title }}</span>
+    <div class="task-dates">
+      <small>Luotu: {{ task.created_at | date:'medium' }}</small>
+      <small *ngIf="task.updated_at">Muokattu: {{ task.updated_at | date:'medium' }}</small>
     </div>
-    <div class="task-actions">
-      <!-- Käytä 'ngIf' direktiiviä varmistamaan, että 'task._id' ei ole 'null' -->
-      <button (click)="task._id ? onDelete(task._id) : null" class="delete-btn">Poista</button>
-      <button (click)="onEdit(task)" class="edit-btn">Muokkaa</button>
-    </div>
+  </div>
+  <div class="task-actions">
+    <button (click)="task._id ? onDelete(task._id) : null" class="delete-btn">Poista</button>
+    <button (click)="onEdit(task)" class="edit-btn">Muokkaa</button>
+  </div>
 </div>

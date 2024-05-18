@@ -1,25 +1,50 @@
-<!-- task-list.component.html -->
-<button (click)="showAddTaskForm()" class="add-task-btn">Lisää tehtävä</button>
-
+<!-- Template -->
 <div class="task-container">
+  <!-- Tehtävän lisääminen -->
+  <button class="add-task-btn" (click)="showAddTaskForm()">Lisää tehtävä</button>
+
+  <!-- Tehtävälista -->
   <ul class="task-list">
-    <li *ngFor="let task of tasks | async" class="task-item">
+    <li *ngFor="let task of tasks | async" class="task-item"
+        (mouseenter)="hoverTask(task._id)" (mouseleave)="hoverTask(null)">
       <div class="task-content">
-        <input type="checkbox" (change)="task._id ? toggleTaskSelection(task._id) : null" [checked]="task._id ? selectedTasks.has(task._id) : false">
-        <span class="task-title" [class.completed]="task.completed">{{ task.title }}</span>
+        <!-- Tehtävän valinta -->
+        <input type="checkbox" (click)="toggleTaskSelection(task._id)">
+        <!-- Tehtävän tiedot -->
+        <div>
+          <span class="task-title">{{ task.title }}</span>
+          <div class="task-status-text" [ngClass]="task.completed ? 'status-completed' : 'status-incomplete'">
+            {{ task.completed ? 'Valmis' : 'Keskeneräinen' }}
+          </div>
+        </div>
+        <!-- Tehtävän päivämäärät -->
+        <div class="task-dates">
+          <small>Luotu: {{ task.created_at | date:'medium' }}</small>
+          <small *ngIf="task.updated_at">Muokattu: {{ task.updated_at | date:'medium' }}</small>
+        </div>
       </div>
+
+      <!-- Tehtävän toiminnot -->
       <div class="task-actions">
-        <button (click)="task._id ? deleteTask(task._id) : null" class="delete-btn">Poista</button>
-        <button (click)="setActiveTask(task)" (dblclick)="setActiveTask(task)" class="edit-btn">Muokkaa</button>
+        <button class="edit-btn" (click)="setActiveTask(task)">Muokkaa</button>
+        <button class="delete-btn" (click)="deleteTaskConfirmation(task)">Poista</button>
+      </div>
+
+      <!-- Tehtävän kuvaus (näytetään, kun hiiri on päällä) -->
+      <div class="task-description" *ngIf="hoveredTaskId === task._id">
+        <p>{{ task.description }}</p>
       </div>
     </li>
   </ul>
-  <button (click)="deleteSelectedTasks()" class="delete-selected-btn">Poista valitut</button>
+
+  <!-- Poista valitut tehtävät -painike -->
+  <button class="delete-selected-btn" (click)="deleteSelectedTasksConfirmation()">Poista valitut</button>
 </div>
 
-<!-- Muokkauslomakkeen dialogi -->
+<!-- Tehtävän muokkaus-/lisäyslomake (näytetään, kun on aktiivinen tehtävä tai lisäyspyyntö) -->
 <div *ngIf="isEditFormVisible && activeTask" class="edit-form-dialog">
   <h3>{{ activeTask._id ? 'Muokkaa Tehtävää' : 'Lisää Uusi Tehtävä' }}</h3>
+
   <form (ngSubmit)="activeTask._id ? updateTask() : addNewTask()">
     <label for="title">Otsikko:</label>
     <input type="text" id="title" [(ngModel)]="activeTask.title" name="title" required>
@@ -27,7 +52,13 @@
     <label for="description">Kuvaus:</label>
     <textarea id="description" [(ngModel)]="activeTask.description" name="description" required></textarea>
 
+    <label for="completed">Tehtävän tila:</label>
+    <select id="completed" [(ngModel)]="activeTask.completed" name="completed">
+      <option [ngValue]="false">Keskeneräinen</option>
+      <option [ngValue]="true">Valmis</option>
+    </select>
+
     <button type="submit" class="save-btn">{{ activeTask._id ? 'Tallenna' : 'Lisää' }}</button>
-    <button type="button" (click)="cancelEdit()" class="cancel-btn">Peruuta</button>
+    <button type="button" class="cancel-btn" (click)="cancelEdit()">Peruuta</button>
   </form>
 </div>

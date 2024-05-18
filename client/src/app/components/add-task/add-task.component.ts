@@ -9,22 +9,30 @@ import { Task } from '../../models/Task';
 })
 export class AddTaskComponent {
   @Output() taskAdded: EventEmitter<Task> = new EventEmitter();
-  newTask: Task = { _id: null, title: '', description: '', completed: false, day: '', reminder: false };
+  newTask: Task = Task.createDefaultTask(); // Käytetään staattista metodia
   activeTask: any;
-  tasks: any;
+  tasks: Task[] = [];
   isEditFormVisible: boolean | undefined;
 
   constructor(private taskService: TaskService) {}
 
   addTask(): void {
-    if (this.activeTask) {
-      this.taskService.addTask(this.activeTask).subscribe((newTask: Task) => {
+    if (this.newTask) {
+      this.newTask.created_at = new Date(); // Asetetaan luontipäivämäärä
+      this.newTask.updated_at = null; // Varmistetaan, että muokkauspäivämäärää ei ole asetettu
+      this.taskService.addTask(this.newTask).subscribe((newTask: Task) => {
         this.tasks.push(newTask);
         this.isEditFormVisible = false;
-        this.activeTask = null;
+        this.newTask = Task.createDefaultTask(); // Alustetaan uudelleen
+        this.taskAdded.emit(newTask);
       }, (error: any) => {
         console.error('Virhe lisätessä uutta tehtävää:', error);
       });
     }
+  }
+
+  cancel(): void {
+    this.isEditFormVisible = false;
+    this.newTask = Task.createDefaultTask();
   }
 }

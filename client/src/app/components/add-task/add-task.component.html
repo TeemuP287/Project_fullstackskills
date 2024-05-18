@@ -1,13 +1,17 @@
-<div class="add-task-form">
-    <h3>Lisää Uusi Tehtävä</h3>
-    <form (ngSubmit)="addTask()">
-      <label for="title">Otsikko:</label>
-      <input type="text" id="title" [(ngModel)]="newTask.title" name="title" required>
-  
-      <label for="description">Kuvaus:</label>
+<div *ngIf="isEditFormVisible">
+  <form (ngSubmit)="addTask()">
+    <div>
+      <label for="title">Title:</label>
+      <input id="title" [(ngModel)]="newTask.title" name="title" required>
+    </div>
+    <div>
+      <label for="description">Description:</label>
       <textarea id="description" [(ngModel)]="newTask.description" name="description" required></textarea>
-  
-      <button type="submit" class="add-btn">Lisää</button>
-    </form>
-  </div>
-  
+    </div>
+    <!-- Muihin kenttiin -->
+    <div>
+      <button type="submit">Add Task</button>
+      <button type="button" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+</div>
