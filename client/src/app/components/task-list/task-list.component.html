@@ -1,3 +1,4 @@
+<!-- task-list.component.html  --->
 <!-- Template -->
 <div class="task-container">
   <!-- Tehtävän lisääminen -->
@@ -20,7 +21,7 @@
         <!-- Tehtävän päivämäärät -->
         <div class="task-dates">
           <small>Luotu: {{ task.created_at | date:'medium' }}</small>
-          <small *ngIf="task.updated_at">Muokattu: {{ task.updated_at | date:'medium' }}</small>
+          <small *ngIf="task.updated_at"> Muokattu: {{ task.updated_at | date:'medium' }}</small>
         </div>
       </div>
 
@@ -47,10 +48,10 @@
 
   <form (ngSubmit)="activeTask._id ? updateTask() : addNewTask()">
     <label for="title">Otsikko:</label>
-    <input type="text" id="title" [(ngModel)]="activeTask.title" name="title" required>
+    <input type="text" id="title" [(ngModel)]="activeTask.title" name="title" required placeholder="Syötä otsikko">
 
     <label for="description">Kuvaus:</label>
-    <textarea id="description" [(ngModel)]="activeTask.description" name="description" required></textarea>
+    <textarea id="description" [(ngModel)]="activeTask.description" name="description" required placeholder="Syötä kuvaus"></textarea>
 
     <label for="completed">Tehtävän tila:</label>
     <select id="completed" [(ngModel)]="activeTask.completed" name="completed">
