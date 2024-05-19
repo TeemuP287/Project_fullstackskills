@@ -10,15 +10,12 @@ import { Task } from '../../models/Task';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
-toggleTaskCompleted(_t6: Task) {
-throw new Error('Method not implemented.');
-}
   isEditFormVisible: boolean = false;
   activeTask: Task | null = null;
   originalTask: Task | null = null;
   tasks: Observable<Task[]> | undefined;
   selectedTasks: Set<string> = new Set();
-  hoveredTaskId: string | null = null; // Uusi muuttuja kuvauksen näyttämiseen
+  hoveredTaskId: string | null = null;
 
   private editClickSubject = new Subject<{ task: Task }>();
 
@@ -87,10 +84,12 @@ throw new Error('Method not implemented.');
   }
 
   setActiveTask(task: Task): void {
-    this.editClickSubject.next({ task });
+    if (task) {
+      this.editClickSubject.next({ task });
+    }
   }
 
-  hoverTask(taskId: string | null): void { // Uusi metodi
+  hoverTask(taskId: string | null): void {
     this.hoveredTaskId = taskId;
   }
 
@@ -113,7 +112,7 @@ throw new Error('Method not implemented.');
     if (this.activeTask && this.activeTask._id) {
       const isTaskModified = this.activeTask.title !== this.originalTask?.title ||
                              this.activeTask.description !== this.originalTask?.description ||
-                             this.activeTask.completed !== this.originalTask?.completed; // Lisätty completed
+                             this.activeTask.completed !== this.originalTask?.completed;
       
       if (isTaskModified) {
         this.activeTask.updated_at = new Date();

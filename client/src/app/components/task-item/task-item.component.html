@@ -1,6 +1,6 @@
 <div class="task-item" *ngIf="task">
   <div class="task-content">
-    <input type="checkbox" (change)="task._id ? toggleTaskSelection(task._id) : null" [checked]="task._id ? selectedTasks.has(task._id) : false">
+    <input type="checkbox" [checked]="task._id ? selectedTasks.has(task._id) : false">
     <span class="task-title" [class.completed]="task.completed">{{ task.title }}</span>
     <div class="task-dates">
       <small>Luotu: {{ task.created_at | date:'medium' }}</small>

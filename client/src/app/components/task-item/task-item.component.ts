@@ -14,7 +14,7 @@ export class TaskItemComponent {
   selectedTasks: Set<string> = new Set();
 
   toggleTaskSelection(taskId: string | null): void {
-    if (taskId) { // Tämä tarkistaa, että taskId ei ole null tai undefined
+    if (taskId) { 
       if (this.selectedTasks.has(taskId)) {
         this.selectedTasks.delete(taskId);
       } else {
@@ -24,12 +24,15 @@ export class TaskItemComponent {
   }
 
   onDelete(taskId: string | null): void {
-    if (taskId) { // Tämä tarkistaa, että taskId ei ole null tai undefined
+    if (taskId) { 
       this.delete.emit(taskId);
     }
   }
 
   onEdit(task: Task): void {
-    this.edit.emit(task);
+    if (task) { 
+      this.edit.emit(task);
+    }
   }
+
 }
