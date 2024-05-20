@@ -33,7 +33,8 @@
   
   .task-description {
     padding: 10px;
-    background-color: #e0f7fa;
+    /**background-color: #e0f7fa;**/
+    background-color: #f7f4d4;
     border-radius: 4px;
   }
   
@@ -44,14 +45,27 @@
   
   .task-dates {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: space-between; /* Asettaa tilan pienten elementtien välille */
+    color: #666;
+    font-size: 0.85em;
   }
   
   .task-dates small {
     color: #666;
     font-size: 0.85em;
+  
   }
+  
+
+/**  .task-dates small:first-child {
+    left: -60px; /* Asetetaan ensimmäisen pienen elementin sijainti *//**
+  }
+  
+  .task-dates small:last-child {
+    right: -60px; /* Asetetaan viimeisen pienen elementin sijainti *//**
+  }
+
+  **/
   
   .task-actions {
     display: flex;
