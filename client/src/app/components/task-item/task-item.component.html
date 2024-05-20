@@ -1,15 +1,30 @@
 <!-- task-item.component.html -->
-<div class="task-item" *ngIf="task">
-  <div class="task-content">
-    <input type="checkbox" [checked]="task._id ? selectedTasks.has(task._id) : false">
-    <span class="task-title" [class.completed]="task.completed">{{ task.title }}</span>
-    <div class="task-dates">
-      <small>Luotu: {{ task.created_at | date:'medium' }}</small>
-      <small *ngIf="task.updated_at">Muokattu: {{ task.updated_at | date:'medium' }}</small>
+<div class="task-content">
+  <!-- Tehtävän valinta -->
+  <input type="checkbox" (change)="task._id && toggleSelection.emit(task._id)">
+
+  <!-- Tehtävän tiedot -->
+  <div>
+    <span class="task-title">{{ task.title }}</span>
+    <div class="task-status-text" [ngClass]="task.completed ? 'status-completed' : 'status-incomplete'">
+      {{ task.completed ? 'Valmis' : 'Keskeneräinen' }}
     </div>
   </div>
+
+  <!-- Tehtävän päivämäärät -->
+  <div class="task-dates">
+    <small>Luotu: {{ task.created_at | date:'medium' }}</small>
+    <small *ngIf="task.updated_at"> Muokattu: {{ task.updated_at | date:'medium' }}</small>
+  </div>
+
+  <!-- Tehtävän toiminnot -->
   <div class="task-actions">
-    <button (click)="task._id ? onDelete(task._id) : null" class="delete-btn">Poista</button>
-    <button (click)="onEdit(task)" class="edit-btn">Muokkaa</button>
+    <button class="edit-btn" (click)="editRequest.emit(task)">Muokkaa</button>
+    <button class="delete-btn" (click)="deleteRequest.emit(task)">Poista</button>
+  </div>
+
+  <!-- Tehtävän kuvaus (näytetään, kun hiiri on päällä) -->
+  <div class="task-description" *ngIf="hovered">
+    <p>{{ task.description }}</p>
   </div>
 </div>

@@ -1,5 +1,3 @@
-//task-item.component.ts
-
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Task } from '../../models/Task';
 
@@ -10,31 +8,17 @@ import { Task } from '../../models/Task';
 })
 export class TaskItemComponent {
   @Input() task!: Task;
-  @Output() delete: EventEmitter<string> = new EventEmitter();
-  @Output() edit: EventEmitter<Task> = new EventEmitter();
+  @Output() deleteRequest = new EventEmitter<Task>();
+  @Output() editRequest = new EventEmitter<Task>();
+  @Output() toggleSelection = new EventEmitter<string>();
+  @Output() hover = new EventEmitter<boolean>();
 
-  selectedTasks: Set<string> = new Set();
+  hovered: boolean = false;
 
-  toggleTaskSelection(taskId: string | null): void {
-    if (taskId) { 
-      if (this.selectedTasks.has(taskId)) {
-        this.selectedTasks.delete(taskId);
-      } else {
-        this.selectedTasks.add(taskId);
-      }
-    }
+  constructor() {}
+
+  toggleHover(): void {
+    this.hovered = !this.hovered;
+    this.hover.emit(this.hovered);
   }
-
-  onDelete(taskId: string | null): void {
-    if (taskId) { 
-      this.delete.emit(taskId);
-    }
-  }
-
-  onEdit(task: Task): void {
-    if (task) { 
-      this.edit.emit(task);
-    }
-  }
-
 }

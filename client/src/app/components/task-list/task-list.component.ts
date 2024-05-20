@@ -1,5 +1,3 @@
-//task-list.component.ts
-
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -17,7 +15,7 @@ export class TaskListComponent implements OnInit {
   originalTask: Task | null = null;
   tasks: Observable<Task[]> | undefined;
   selectedTasks: Set<string> = new Set();
-  hoveredTaskId: string | null = null;
+  hoveredTaskId: string | boolean | null = null;
 
   private editClickSubject = new Subject<{ task: Task }>();
 
@@ -91,7 +89,7 @@ export class TaskListComponent implements OnInit {
     }
   }
 
-  hoverTask(taskId: string | null): void {
+  hoverTask(taskId: string | boolean | null): void {
     this.hoveredTaskId = taskId;
   }
 
