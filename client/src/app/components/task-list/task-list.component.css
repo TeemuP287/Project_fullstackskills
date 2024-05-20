@@ -150,7 +150,43 @@
   color: red;
 }
 
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
 
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination-container button, 
+.pagination-container .page-number {
+  padding: 5px 10px;  /* Pienennetty padding */
+  margin: 0 3px;  /* Pienennetty margin */
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 3px;  /* Pienennetty border-radius */
+  cursor: pointer;
+  font-size: 10px;  /* Pienennetty font-size */
+}
+
+.pagination-container button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.pagination-container .page-number:hover {
+  background-color: #0056b3;
+}
+
+.pagination-container .page-number.active {
+  background-color: #0056b3;
+  font-weight: bold;
+}
 
 /* Responsiivisuus */
 

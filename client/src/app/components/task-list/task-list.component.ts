@@ -13,9 +13,12 @@ export class TaskListComponent implements OnInit {
   isEditFormVisible: boolean = false;
   activeTask: Task | null = null;
   originalTask: Task | null = null;
-  tasks: Observable<Task[]> | undefined;
+  tasks: Task[] = [];
   selectedTasks: Set<string> = new Set();
   hoveredTaskId: string | boolean | null = null;
+
+  currentPage: number = 1;
+  tasksPerPage: number = 5;
 
   private editClickSubject = new Subject<{ task: Task }>();
 
@@ -38,7 +41,40 @@ export class TaskListComponent implements OnInit {
   }
 
   getTasks(): void {
-    this.tasks = this.taskService.getTasks();
+    this.taskService.getTasks().subscribe((tasks) => {
+      this.tasks = tasks;
+    });
+  }
+
+  paginatedTasks(): Task[] {
+    const startIndex = (this.currentPage - 1) * this.tasksPerPage;
+    return this.tasks.slice(startIndex, startIndex + this.tasksPerPage);
+  }
+
+  totalPages(): number {
+    return Math.ceil(this.tasks.length / this.tasksPerPage);
+  }
+
+  pages(): number[] {
+    return Array.from({ length: this.totalPages() }, (_, i) => i + 1);
+  }
+
+  goToPage(page: number): void {
+    if (page >= 1 && page <= this.totalPages()) {
+      this.currentPage = page;
+    }
+  }
+
+  prevPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages()) {
+      this.currentPage++;
+    }
   }
 
   toggleTaskSelection(taskId: string | null): void {
