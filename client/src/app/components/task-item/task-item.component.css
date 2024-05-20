@@ -46,19 +46,26 @@
   .task-dates {
     display: flex;
     justify-content: space-between; /* Asettaa tilan pienten elementtien välille */
-    color: #666;
-    font-size: 0.85em;
+    font-size: 0.90em;
+  
   }
+  .task-dates small:first-child {
+    margin-right: 18px; /* Lisää hieman tilaa luodun ja muokatun päivämäärän välille */
+  }
+
+
   
   .task-dates small {
-    color: #666;
-    font-size: 0.85em;
-  
+    color: #552e03a9;
+    font-size: 0.90em;
+    font-weight: bold;
+    
   }
   
 
-/**  .task-dates small:first-child {
-    left: -60px; /* Asetetaan ensimmäisen pienen elementin sijainti *//**
+  
+ /** .task-dates small:first-child {
+    left: -60px; /* Asetetaan ensimmäisen pienen elementin sijainti 
   }
   
   .task-dates small:last-child {
