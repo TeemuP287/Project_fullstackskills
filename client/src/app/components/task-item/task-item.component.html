@@ -1,5 +1,4 @@
-<!-- task-item.component.html -->
-<div class="task-content">
+<div class="task-content" (mouseenter)="hovered = true" (mouseleave)="hovered = false">
   <!-- Tehtävän valinta -->
   <input type="checkbox" (change)="task._id && toggleSelection.emit(task._id)">
 
