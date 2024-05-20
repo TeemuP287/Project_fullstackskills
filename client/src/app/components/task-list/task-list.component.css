@@ -95,6 +95,20 @@
   color: white;
 }
 
+.delete-all-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.delete-all-btn:hover {
+  background-color: #c82333;
+}
+
 .edit-btn {
   background-color: #4ecdc4;
   color: white;

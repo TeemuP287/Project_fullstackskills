@@ -50,7 +50,7 @@
   
   }
   .task-dates small:first-child {
-    margin-right: 18px; /* Lisää hieman tilaa luodun ja muokatun päivämäärän välille */
+    margin-right: 20px; /* Lisää hieman tilaa luodun ja muokatun päivämäärän välille */
   }
 
 

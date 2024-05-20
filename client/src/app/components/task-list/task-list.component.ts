@@ -114,6 +114,24 @@ export class TaskListComponent implements OnInit {
     this.selectedTasks.clear();
   }
 
+
+  deleteAllTasksConfirmation(): void {
+    const confirmDelete = confirm('Haluatko varmasti poistaa kaikki tehtävät?');
+    if (confirmDelete) {
+      this.deleteAllTasks();
+    }
+  }
+
+  deleteAllTasks(): void {
+    this.taskService.getTasks().subscribe((tasks: Task[]) => {
+      tasks.forEach(task => {
+        if (task._id) {
+          this.deleteTask(task._id);
+        }
+      });
+    });
+  }
+
   showAddTaskForm(): void {
     this.isEditFormVisible = true;
     this.activeTask = Task.createDefaultTask();
