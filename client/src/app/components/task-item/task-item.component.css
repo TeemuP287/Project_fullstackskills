@@ -122,11 +122,23 @@
     color: white;
   }
   
+   .edit-btn:hover{
+
+      background-color: #16a8ab;
+    }
+
   .delete-btn {
     background-color: #ff6b6b;
     color: white;
   }
   
+   .delete-btn:hover{
+
+
+      background-color: #c82333;
+   }
+
+
   .edit-form-dialog,
   .add-task-form {
     margin: 0 auto;

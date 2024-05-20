@@ -67,6 +67,19 @@
   margin-left: 8px;
 }
 
+
+.save-btn:hover,
+.cancel-btn:hover {
+  
+  background-color: #3baa9f;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background-color: #dc3545; /* Punainen */
+  color: white;
+}
+
 .add-task-btn,
 .delete-selected-btn,
 .edit-btn,
@@ -86,7 +99,20 @@
 .save-btn {
   background-color: #4ecdc4;
   color: white;
+  
 }
+
+
+.add-task-btn:hover {
+  background-color: #3baa9f;
+
+}
+
+.delete-selected-btn:hover{
+
+  background-color: #c82333;
+}
+
 
 .delete-selected-btn,
 .delete-btn,
@@ -114,6 +140,7 @@
   color: white;
 }
 
+
 .delete-btn {
   background-color: #ff6b6b;
   color: white;
@@ -128,6 +155,8 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+
 
 .edit-form-dialog h3,
 .add-task-form h3 {
@@ -233,6 +262,9 @@
     max-width: 500px; /* Pienennetään maksimileveyttä paremman sovituksen saamiseksi */
     padding: 10px;
   }
+
+
+
 
   .edit-form-dialog form,
   .add-task-form form {
