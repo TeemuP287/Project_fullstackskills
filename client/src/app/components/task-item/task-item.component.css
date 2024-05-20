@@ -60,13 +60,11 @@
   }
   
   .task-actions button {
-    padding: 10px 20px;
+    padding: 8px 16px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     margin-left: 8px;
-    transition: all 0.3s ease;
-    outline: none;
   }
   
   .add-task-btn,
@@ -75,32 +73,36 @@
   .delete-btn,
   .cancel-btn,
   .save-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
     width: 100%;
     text-align: center;
-    color: white;
   }
   
   .add-task-btn,
   .save-btn {
     background-color: #4ecdc4;
-    border: 2px solid #4ecdc4;
+    color: white;
   }
   
   .delete-selected-btn,
   .delete-btn,
   .cancel-btn {
     background-color: #ff6b6b;
-    border: 2px solid #ff6b6b;
+    color: white;
   }
   
   .edit-btn {
     background-color: #4ecdc4;
-    border: 2px solid #4ecdc4;
+    color: white;
   }
   
   .delete-btn {
     background-color: #ff6b6b;
-    border: 2px solid #ff6b6b;
+    color: white;
   }
   
   .edit-form-dialog,
@@ -148,15 +150,49 @@
     color: red;
   }
   
-   /* Responsiivisuus */
+  
+  
+  /* Responsiivisuus */
+  
   @media (max-width: 768px) {
     .task-container {
       padding: 0 20px;
     }
-  }
- 
-  @media only screen and (max-width: 768px) {
+  
     .task-actions button {
-      padding: 8px 16px; /* Napin koko pienenee mobiililaitteille */
+      padding: 8px 16px; /* Napin koko pienempi mobiililaitteille */
+      font-size: 0.85em; /* Pienempi fontti napin sisällä */
+    }
+  
+    .task-title {
+      font-size: 1em; /* Pienennetään otsikoiden fonttikokoa */
+    }
+  
+    .task-dates small {
+      font-size: 0.75em; /* Pienennetään fontin koko */
+    }
+  
+    .task-description {
+      padding: 8px; /* Pienennetään tehtävän kuvauksen paddingia mobiililaitteilla */
+    }
+  
+    .edit-form-dialog,
+    .add-task-form {
+      margin: 0 auto;
+      max-width: 500px; /* Pienempi max leveys paremman sovituksen saamiseksi */
+      padding: 10px;
+    }
+  
+    .edit-form-dialog form,
+    .add-task-form form {
+      margin-top: 10px; /* Pienennetään lomakkeiden elementtien välistä tilaa */
+    }
+  
+    .edit-form-dialog input[type="text"],
+    .edit-form-dialog textarea,
+    .add-task-form input[type="text"],
+    .add-task-form textarea {
+      padding: 8px; /* Pienennetään input-kenttien paddingia mobiililaitteilla */
     }
   }
+  

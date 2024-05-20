@@ -150,15 +150,49 @@
   color: red;
 }
 
+
+
 /* Responsiivisuus */
+
+
 @media (max-width: 768px) {
   .task-container {
     padding: 0 20px;
   }
-}
 
-@media only screen and (max-width: 768px) {
   .task-actions button {
     padding: 8px 16px; /* Napin koko pienenee mobiililaitteille */
+    font-size: 0.85em; /* Vähennetään fonttikokoa napin sisällä */
+  }
+
+  .task-title {
+    font-size: 1em; /* Pienennetään otsikoiden fonttikokoa */
+  }
+
+  .task-dates small {
+    font-size: 0.75em; /* Pienennetään pienen fontin koko */
+  }
+
+  .task-description {
+    padding: 8px; /* Pienennetään lisää tehtävän kuvauksen paddingia mobiililaitteilla */
+  }
+
+  .edit-form-dialog,
+  .add-task-form {
+    margin: 0 auto;
+    max-width: 500px; /* Pienennetään maksimileveyttä paremman sovituksen saamiseksi */
+    padding: 10px;
+  }
+
+  .edit-form-dialog form,
+  .add-task-form form {
+    margin-top: 10px; /* Pienennetään lomakkeiden elementtien välistä tilaa */
+  }
+
+  .edit-form-dialog input[type="text"],
+  .edit-form-dialog textarea,
+  .add-task-form input[type="text"],
+  .add-task-form textarea {
+    padding: 8px; /* Pienennetään input-kenttien paddingia mobiililaitteilla */
   }
 }
