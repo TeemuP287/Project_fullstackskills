@@ -1,4 +1,4 @@
-/* styles.css */
+/* task-list.component.css*/
 
 .task-container {
   margin: 0 auto;
@@ -16,6 +16,9 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+
+
 
 .task-content {
   padding: 20px;
@@ -67,6 +70,28 @@
   margin-left: 8px;
 }
 
+
+
+
+/* Otsikon tyyli */
+.task-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin: 0;
+  margin-bottom: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%; /* Varmistetaan, että maksimi leveys on asetettu */
+}
+
+/* Kuvaustekstin tyyli */
+.task-description p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 250px;
+}
 
 .save-btn:hover,
 .cancel-btn:hover {
@@ -157,6 +182,14 @@
 }
 
 
+.edit-form-dialog select {
+  background-color: #f7f4d4; /* Taustaväri */
+  padding: 8px; /* Sisennyksen koko */
+  border-radius: 4px; /* Reunuksen pyöristys */
+  border: 1px solid #ccc; /* Reunuksen tyyli */
+  font-size: 16px; /* Tekstin koko */
+  
+}
 
 .edit-form-dialog h3,
 .add-task-form h3 {
@@ -168,6 +201,7 @@
 .add-task-form form {
   display: flex;
   flex-direction: column;
+
 }
 
 .edit-form-dialog label,
@@ -183,6 +217,8 @@
   margin-top: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  font-size: 16px;
+  background-color: #f7f4d4;
 }
 
 .status-completed {

@@ -46,6 +46,9 @@ export class TaskListComponent implements OnInit {
     });
   }
 
+
+  // Sivutus --->
+
   paginatedTasks(): Task[] {
     const startIndex = (this.currentPage - 1) * this.tasksPerPage;
     return this.tasks.slice(startIndex, startIndex + this.tasksPerPage);
@@ -76,6 +79,8 @@ export class TaskListComponent implements OnInit {
       this.currentPage++;
     }
   }
+
+  // <--- Sivutus 
 
   toggleTaskSelection(taskId: string | null): void {
     if (taskId && this.selectedTasks.has(taskId)) {

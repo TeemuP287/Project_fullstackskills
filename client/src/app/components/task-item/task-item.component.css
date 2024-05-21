@@ -1,4 +1,4 @@
-/* styles.css */
+/* task-item.component.css */
 
 .task-container {
     margin: 0 auto;
@@ -17,8 +17,65 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
+  .task-desc {
+
+    color: #552e03a9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    
+ 
+  }
+  
+  .task-lower-half {
+    position: relative;
+    bottom: 50%;
+    left: 0;
+    width: 100%;
+    height: 10%;
+    background: transparent;
+    pointer-events: auto;
+  }
+
+
+  /**
+.task-lower-half {
+  position: relative;
+}
+
+.hover-area {
+  position: absolute;
+  bottom: 0; 
+  left: 0;
+  width: 100%;
+  height: 50%; 
+  background: transparent; 
+  pointer-events: auto; 
+}
+
+**/
+
+
   .task-content {
     padding: 20px;
+    display:flexbox;
+    flex-direction: column;
+    /**width: 100%;*/
+  }
+  
+
+/***
+  .task-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .task-content > div {
+    display: flex;
+    align-items: center;
+    width: 100%;
   }
   
   .task-title {
@@ -29,15 +86,57 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    max-width: 100%;
   }
+
+
+*/
+
+
+.task-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin: 0;
+  margin-bottom: 10px;
+  max-width: 100%; /* Voit muuttaa tätä arvoa tarvittaessa */
+  display: block;
+  overflow-x: auto; /* Lisää vaakasuuntainen vieritys, jos teksti menee yli */
+}
+
+/* Piilota vierityspalkki WebKit-selaimissa (kuten Chrome ja Safari) */
+ .task-title::-webkit-scrollbar {
+  display: none;
+ }
+
+ .task-title {
+  scrollbar-width: none; /* Piilottaa vierityspalkin Firefoxissa */
+}
   
-  .task-description {
-    padding: 10px;
-    /**background-color: #e0f7fa;**/
-    background-color: #f7f4d4;
-    border-radius: 4px;
-  }
+ .task-description {
+  padding: 10px;
+  background-color: #f7f4d4;
+  border-radius: 4px;
+  max-width: 550px; /* tai muu sopiva leveys */
+  max-height: 200px; /* määritä maksimikorkeus */
+  overflow: hidden; /* Piilottaa mahdollisen ylivuotavan sisällön */
+  word-wrap: break-word; /* Teksti rivittyy tarvittaessa */
+  overflow-y: auto; /* Lisää pystysuuntainen vieritys tarvittaessa */
+}
+
+.task-description p {
+  margin: 0; /* Poistaa oletusmarginaalin */
+  white-space: pre-line; /* Näyttää rivinvaihdot */
+  overflow-x: hidden; /* Poista vaakasuuntainen vieritys */
+}
+
+.task-description p::-webkit-scrollbar {
+  display: none; /* Piilota vierityspalkki WebKit-selaimissa (kuten Chrome ja Safari) */
   
+}
+.task-description p {
+  scrollbar-width: none; /* Piilota vierityspalkki Firefox-selaimessa */
+}
+
   .task-status-text {
     font-size: 0.9em;
     color: #666;
@@ -46,11 +145,14 @@
   .task-dates {
     display: flex;
     justify-content: space-between; /* Asettaa tilan pienten elementtien välille */
+    align-items: center;
     font-size: 0.90em;
   
   }
   .task-dates small:first-child {
-    margin-right: 20px; /* Lisää hieman tilaa luodun ja muokatun päivämäärän välille */
+    margin-right: 25px; /* Lisää hieman tilaa luodun ja muokatun päivämäärän välille */
+  
+    
   }
 
 
@@ -59,7 +161,11 @@
     color: #552e03a9;
     font-size: 0.90em;
     font-weight: bold;
-    
+    display: flex;
+    text-align: justify;
+    letter-spacing: 1.5px;
+    max-width: 192px;
+
   }
   
 
@@ -139,6 +245,9 @@
    }
 
 
+
+
+   
   .edit-form-dialog,
   .add-task-form {
     margin: 0 auto;
@@ -178,10 +287,12 @@
   
   .status-completed {
     color: green;
+   font-weight: bold; 
   }
   
   .status-incomplete {
     color: red;
+    font-weight: bold;
   }
   
   .pagination-container {

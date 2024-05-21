@@ -1,29 +1,41 @@
-<div class="task-content" (mouseenter)="hovered = true" (mouseleave)="hovered = false">
+<div class="task-content">
+
   <!-- Tehtävän valinta -->
   <input type="checkbox" (change)="task._id && toggleSelection.emit(task._id)">
 
   <!-- Tehtävän tiedot -->
   <div>
     <span class="task-title">{{ task.title }}</span>
+   <!-- <span class="task-title" [attr.data-full-text]="task.title">{{ task.title }}</span>-->
+
     <div class="task-status-text" [ngClass]="task.completed ? 'status-completed' : 'status-incomplete'">
       {{ task.completed ? 'Valmis' : 'Keskeneräinen' }}
     </div>
   </div>
-
-  <!-- Tehtävän päivämäärät -->
+  
+  <!--  Näytetään tehtävän kuvaus, kun hiiri on tietyllä alueella päällä    -->
+ 
+    
+    <!-- Tehtävän päivämäärät -->
   <div class="task-dates">
     <small>Luotu: {{ task.created_at | date:'medium' }}</small>
     <small *ngIf="task.updated_at">  Muokattu: {{ task.updated_at | date:'medium' }}</small>
   </div>
 
+  
   <!-- Tehtävän toiminnot -->
   <div class="task-actions">
     <button class="edit-btn" (click)="editRequest.emit(task)">Muokkaa</button>
     <button class="delete-btn" (click)="deleteRequest.emit(task)">Poista</button>
   </div>
 
+  <div class="task-lower-half" (mouseenter)="hovered = true" (mouseleave)="hovered = false">
+   <div class="task-desc"> Näytä tehtävän kuvaus </div> 
+  
   <!-- Tehtävän kuvaus (näytetään, kun hiiri on päällä) -->
   <div class="task-description" *ngIf="hovered">
     <p>{{ task.description }}</p>
   </div>
 </div>
+</div>
+
