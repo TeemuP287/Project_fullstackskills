@@ -18,7 +18,10 @@
 }
 
 
+.error-message {
 
+  color: red;
+}
 
 .task-content {
   padding: 20px;

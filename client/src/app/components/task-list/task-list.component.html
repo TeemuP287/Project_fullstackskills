@@ -15,19 +15,15 @@
     </li>
   </ul>
 
- 
-
   <!-- Poista valitut tehtävät -painike -->
   <button class="delete-selected-btn" (click)="deleteSelectedTasksConfirmation()">Poista valitut</button>
 
-<!-- Poista kaikki tehtävät -painike -->
-<button class="delete-all-btn" (click)="deleteAllTasksConfirmation()">Poista kaikki</button>
-
+  <!-- Poista kaikki tehtävät -painike -->
+  <button class="delete-all-btn" (click)="deleteAllTasksConfirmation()">Poista kaikki</button>
 </div>
 
-
- <!-- Sivutusohjaimet -->
- <div class="pagination-container">
+<!-- Sivutusohjaimet -->
+<div class="pagination-container">
   <button [disabled]="currentPage === 1" (click)="prevPage()">Edellinen</button>
   <span *ngFor="let page of pages()" 
         class="page-number" 
@@ -44,8 +40,11 @@
     <label for="title">Otsikko:</label>
     <input type="text" id="title" [(ngModel)]="activeTask.title" name="title" required placeholder="Syötä otsikko" maxlength="120" (input)="updateRemainingCharacters()">
     <small>{{ remainingCharacters }} merkkiä jäljellä</small>
+    <div *ngIf="titleError" class="error-message">{{ titleError }}</div>
+    
     <label for="description">Kuvaus:</label>
     <textarea id="description" [(ngModel)]="activeTask.description" name="description" required placeholder="Syötä kuvaus"></textarea>
+    <div *ngIf="descriptionError" class="error-message">{{ descriptionError }}</div>
 
     <label for="completed">Tehtävän tila:</label>
     <select id="completed" [(ngModel)]="activeTask.completed" name="completed">

@@ -19,6 +19,9 @@ export class TaskListComponent implements OnInit {
   remainingCharacters: number = 120;
   currentPage: number = 1;
   tasksPerPage: number = 5;
+  titleError: string | null = null;
+  descriptionError: string | null = null;
+
 
   private editClickSubject = new Subject<{ task: Task }>();
 
@@ -153,6 +156,9 @@ export class TaskListComponent implements OnInit {
   }
 
   addNewTask(): void {
+    if (!this.validateForm()) {
+      return;
+    }
     if (this.activeTask) {
       this.activeTask.created_at = new Date();
       this.activeTask.updated_at = null;
@@ -168,6 +174,9 @@ export class TaskListComponent implements OnInit {
   }
 
   updateTask(): void {
+    if (!this.validateForm()) {
+      return;
+    }
     if (this.activeTask && this.activeTask._id) {
       const isTaskModified = this.activeTask.title !== this.originalTask?.title ||
                              this.activeTask.description !== this.originalTask?.description ||
@@ -199,10 +208,41 @@ export class TaskListComponent implements OnInit {
       this.activeTask = { ...this.originalTask };
     }
     this.isEditFormVisible = false;
+    this.resetErrors();
   }
-
 
   updateRemainingCharacters(): void {
     this.remainingCharacters = 120 - (this.activeTask?.title?.length || 0);
   }
+
+
+  validateForm(): boolean {
+    let isValid = true;
+    this.resetErrors();
+  
+    if (!this.activeTask?.title && !this.activeTask?.description) {
+      this.titleError = 'Lisää otsikko';
+      this.descriptionError = 'Lisää tehtävän kuvaus';
+      isValid = false;
+    } else {
+      if (!this.activeTask?.title) {
+        this.titleError = 'Lisää otsikko';
+        isValid = false;
+      }
+      if (!this.activeTask?.description) {
+        this.descriptionError = 'Lisää tehtävän kuvaus';
+        isValid = false;
+      }
+    }
+  
+    return isValid;
+  }
+  
+
+  resetErrors(): void {
+    this.titleError = null;
+    this.descriptionError = null;
+  }
+
+
 }
