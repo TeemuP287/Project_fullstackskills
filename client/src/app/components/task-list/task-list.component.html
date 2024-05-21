@@ -42,8 +42,8 @@
 
   <form (ngSubmit)="activeTask._id ? updateTask() : addNewTask()">
     <label for="title">Otsikko:</label>
-    <input type="text" id="title" [(ngModel)]="activeTask.title" name="title" required placeholder="Syötä otsikko">
-
+    <input type="text" id="title" [(ngModel)]="activeTask.title" name="title" required placeholder="Syötä otsikko" maxlength="120" (input)="updateRemainingCharacters()">
+    <small>{{ remainingCharacters }} merkkiä jäljellä</small>
     <label for="description">Kuvaus:</label>
     <textarea id="description" [(ngModel)]="activeTask.description" name="description" required placeholder="Syötä kuvaus"></textarea>
 

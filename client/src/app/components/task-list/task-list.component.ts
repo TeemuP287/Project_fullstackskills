@@ -16,7 +16,7 @@ export class TaskListComponent implements OnInit {
   tasks: Task[] = [];
   selectedTasks: Set<string> = new Set();
   hoveredTaskId: string | boolean | null = null;
-
+  remainingCharacters: number = 120;
   currentPage: number = 1;
   tasksPerPage: number = 5;
 
@@ -179,6 +179,10 @@ export class TaskListComponent implements OnInit {
         this.activeTask.updated_at = null;
       }
       
+
+
+
+      
       this.taskService.updateTask(this.activeTask).subscribe(() => {
         this.getTasks();
         this.isEditFormVisible = false;
@@ -195,5 +199,10 @@ export class TaskListComponent implements OnInit {
       this.activeTask = { ...this.originalTask };
     }
     this.isEditFormVisible = false;
+  }
+
+
+  updateRemainingCharacters(): void {
+    this.remainingCharacters = 120 - (this.activeTask?.title?.length || 0);
   }
 }
