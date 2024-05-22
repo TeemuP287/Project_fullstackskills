@@ -18,7 +18,7 @@ export class TaskListComponent implements OnInit {
   hoveredTaskId: string | boolean | null = null;
   remainingCharacters: number = 120;
   currentPage: number = 1;
-  tasksPerPage: number = 5;
+  tasksPerPage: number = 4;
   titleError: string | null = null;
   descriptionError: string | null = null;
 
