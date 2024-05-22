@@ -1,14 +1,37 @@
 /* task-list.component.css*/
 
+
+::ng-deep .container {
+  
+    display: flex; /* Käytetään flexboxia */
+    flex-direction: column; /* Asetetaan pystysuuntainen järjestys */
+    align-items: stretch; /* Joustava leveys sisällön mukaan */
+    width: auto; /* Automaattinen leveys */
+  
+}
+
+
+
+
+
+
+
 .task-container {
   margin: 0 auto;
   max-width: 600px;
+  flex-grow: 1; /* Tämä auttaa venyttämään kontaineria sivusuunnassa */
+
 }
+
 
 .task-list {
   list-style: none;
   padding: 0;
+
+
 }
+
+
 
 .task-item {
   margin-bottom: 20px;
@@ -23,10 +46,14 @@
   color: red;
 }
 
+
+/**
 .task-content {
   padding: 20px;
 }
+**/
 
+/**
 .task-title {
   font-size: 1.2em;
   font-weight: bold;
@@ -42,12 +69,20 @@
   background-color: #e0f7fa;
   border-radius: 4px;
 }
+**/
+
+/**
 
 .task-status-text {
   font-size: 0.9em;
   color: #666;
-}
 
+
+
+}
+**/
+
+/**
 .task-dates {
   display: flex;
   justify-content: space-between;
@@ -58,6 +93,9 @@
   color: #666;
   font-size: 0.85em;
 }
+
+**/
+
 
 .task-actions {
   display: flex;
@@ -176,16 +214,28 @@
 
 .edit-form-dialog,
 .add-task-form {
+  
   margin: 0 auto;
   max-width: 600px;
   padding: 20px;
   background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+
 }
 
-
-
+/**Dropdown**/
+.edit-form-dialog select,
+.add-task-form select {
+  padding: 8px; /* Lisää paddingia */
+  margin-top: 5px; /* Lisää ylämarginaalia */
+  border: 1px solid #ccc; /* Lisää reunus */
+  border-radius: 4px; /* Pyöristä reunat */
+  font-size: 16px; /* Fonttikoko */
+  background-color: #f7f4d4; /* Taustaväri */
+  color: #333; /* Tekstin väri */
+}
 
 
 .edit-form-dialog h3,
@@ -218,6 +268,8 @@
   background-color: #f7f4d4;
 }
 
+
+/**
 .status-completed {
   color: green;
 }
@@ -225,6 +277,8 @@
 .status-incomplete {
   color: red;
 }
+
+**/
 
 .pagination-container {
   display: flex;
@@ -294,8 +348,9 @@
     margin: 0 auto;
     max-width: 500px; /* Pienennetään maksimileveyttä paremman sovituksen saamiseksi */
     padding: 10px;
+ 
+ 
   }
-
 
 
 
