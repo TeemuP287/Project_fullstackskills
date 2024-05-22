@@ -185,14 +185,8 @@
 }
 
 
-.edit-form-dialog select {
-  background-color: #f7f4d4; /* Taustaväri */
-  padding: 8px; /* Sisennyksen koko */
-  border-radius: 4px; /* Reunuksen pyöristys */
-  border: 1px solid #ccc; /* Reunuksen tyyli */
-  font-size: 16px; /* Tekstin koko */
-  
-}
+
+
 
 .edit-form-dialog h3,
 .add-task-form h3 {
