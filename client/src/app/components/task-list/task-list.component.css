@@ -3,17 +3,31 @@
 
 ::ng-deep .container {
   
-    display: flex; /* Käytetään flexboxia */
+    display:flex; /* Käytetään flexboxia */
     flex-direction: column; /* Asetetaan pystysuuntainen järjestys */
     align-items: stretch; /* Joustava leveys sisällön mukaan */
-    width: auto; /* Automaattinen leveys */
-  
+    justify-content:stretch; /* Joustava korkeus sisään mukaan */
+    
+    width: 1200px; /* Kiinteä leveys */
+    height: 1000px; /* Kiinteä korkeus */
+    overflow: hidden;
+   
+    /**width: auto; /* Automaattinen leveys */
+
+  /** margin: 0 auto;**/
+   max-width: 1200px;
+   max-height:none;
+   /**
+   padding: 10px;
+   flex-grow: 1;      /* Tämä auttaa venyttää kontaineria sivusuunnassa */
+
+   flex-grow: 1; 
 }
 
 
 .task-container {
   margin: 0 auto;
-  max-width: 600px;
+  max-width: 450px;
   flex-grow: 1; /* Tämä auttaa venyttämään kontaineria sivusuunnassa */
 
 }
@@ -22,6 +36,7 @@
 .task-list {
   list-style: none;
   padding: 0;
+  
 
 
 }
@@ -216,6 +231,7 @@
   background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
 
 
 }

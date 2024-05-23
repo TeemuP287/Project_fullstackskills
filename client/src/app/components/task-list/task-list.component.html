@@ -1,10 +1,36 @@
-<div class="task-container" >
+<div class="task-container">
   <!-- Tehtävän lisääminen -->
   <button class="add-task-btn" (click)="showAddTaskForm()">Lisää tehtävä</button>
 
+  <!-- Tehtävälista -->
+  <ul class="task-list">
+    <li *ngFor="let task of paginatedTasks()" class="task-item"
+        (mouseenter)="hoverTask(task._id)" (mouseleave)="hoverTask(null)">
+      <app-task-item [task]="task"
+                     (deleteRequest)="deleteTaskConfirmation($event)"
+                     (editRequest)="setActiveTask($event)"
+                     (toggleSelection)="toggleTaskSelection($event)"
+                     (hover)="hoverTask($event)">
+      </app-task-item>
+    </li>
+  </ul>
 
+  <!-- Poista valitut tehtävät -painike -->
+  <button class="delete-selected-btn" (click)="deleteSelectedTasksConfirmation()">Poista valitut</button>
 
+  <!-- Poista kaikki tehtävät -painike -->
+  <button class="delete-all-btn" (click)="deleteAllTasksConfirmation()">Poista kaikki</button>
+</div>
 
+<!-- Sivutusohjaimet -->
+<div class="pagination-container">
+  <button [disabled]="currentPage === 1" (click)="prevPage()">Edellinen</button>
+  <span *ngFor="let page of pages()" 
+        class="page-number" 
+        [class.active]="currentPage === page" 
+        (click)="goToPage(page)">{{ page }}</span>
+  <button [disabled]="currentPage === totalPages()" (click)="nextPage()">Seuraava</button>
+</div>
 
 <!-- Tehtävän muokkaus-/lisäyslomake (näytetään, kun on aktiivinen tehtävä tai lisäyspyyntö) -->
 <div *ngIf="isEditFormVisible && activeTask" class="edit-form-dialog">
@@ -30,44 +56,3 @@
     <button type="button" class="cancel-btn" (click)="cancelEdit()">Peruuta</button>
   </form>
 </div>
-
-
-
-
-
-
-  <!-- Tehtävälista -->
-  <ul class="task-list">
-    <li *ngFor="let task of paginatedTasks()" class="task-item"
-        (mouseenter)="hoverTask(task._id)" (mouseleave)="hoverTask(null)">
-      <app-task-item [task]="task"
-                     (deleteRequest)="deleteTaskConfirmation($event)"
-                     (editRequest)="setActiveTask($event)"
-                     (toggleSelection)="toggleTaskSelection($event)"
-                     (hover)="hoverTask($event)">
-      </app-task-item>
-    </li>
-  </ul>
-
-
-  <!-- Poista valitut tehtävät -painike -->
-  <button class="delete-selected-btn" (click)="deleteSelectedTasksConfirmation()">Poista valitut</button>
-
-  <!-- Poista kaikki tehtävät -painike -->
-  <button class="delete-all-btn" (click)="deleteAllTasksConfirmation()">Poista kaikki</button>
-
-</div>
-
-
-
-<!-- Sivutusohjaimet -->
-<div class="pagination-container">
-  <button [disabled]="currentPage === 1" (click)="prevPage()">Edellinen</button>
-  <span *ngFor="let page of pages()" 
-        class="page-number" 
-        [class.active]="currentPage === page" 
-        (click)="goToPage(page)">{{ page }}</span>
-  <button [disabled]="currentPage === totalPages()" (click)="nextPage()">Seuraava</button>
-</div>
-
-
