@@ -3,35 +3,35 @@
 
 ::ng-deep .container {
   
-    display:flex; /* Käytetään flexboxia */
-    flex-direction: column; /* Asetetaan pystysuuntainen järjestys */
-    align-items: stretch; /* Joustava leveys sisällön mukaan */
-    justify-content:stretch; /* Joustava korkeus sisään mukaan */
-    
-    width: 1200px; /* Kiinteä leveys */
-    height: 1000px; /* Kiinteä korkeus */
-    
-    border: none; /* Nollaa reunukset */
-    padding: 0; /* Nollaa täyttö */
-    /**width: auto; /* Automaattinen leveys */
-    overflow-y: scroll; /* Näyttää vierityspalkin tarvittaessa */
   
-
-    /** margin: 0 auto;**/
+  border: none; /* Nollaa reunukset 
+   
+   /* Käytetään flexboxia 
+    display:flex; 
+    flex-direction: column; /* Asetetaan pystysuuntainen järjestys 
+    align-items: stretch; /* Joustava leveys sisällön mukaan 
+    justify-content:flex-start; /* Joustava korkeus sisään mukaan 
+    
+    width: 1800px; /* Kiinteä leveys 
+    height: 1800px;/* Kiinteä korkeus 
+    
+    border: none; /* Nollaa reunukset 
+    padding: 0; /* Nollaa täyttö */
+    /**width: auto; /* Automaattinen leveys
+    overflow-y:auto; /* Näyttää vierityspalkin tarvittaessa 
+    margin: 0 auto;
+    /**
     max-width: 1200px;
     max-height:none;
     /**
     padding: 10px;
     flex-grow: 1;      /* Tämä auttaa venyttää kontaineria sivusuunnassa */
 
-    flex-grow: 1; 
-}
-
     /**::ng-deep .container::-webkit-scrollbar {
       display: none;  
     }
     **/
-
+  }
 
 .task-container {
   margin: 0 auto;
@@ -304,12 +304,6 @@
   justify-content: center;
   margin-top: 20px;
   padding-bottom: 20px;
-}
-
-.pagination-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
 }
 
 .pagination-container button, 

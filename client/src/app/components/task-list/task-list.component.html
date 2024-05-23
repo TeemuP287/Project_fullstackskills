@@ -26,6 +26,8 @@
     </form>
   </div>
 
+
+
   <!-- Tehtävälista -->
   <ul class="task-list">
     <li *ngFor="let task of paginatedTasks()" class="task-item" (mouseenter)="hoverTask(task._id)" (mouseleave)="hoverTask(null)">
@@ -58,7 +60,7 @@
 
   <!-- Poista kaikki tehtävät -painike -->
   <button class="delete-all-btn" (click)="deleteAllTasksConfirmation()">Poista kaikki</button>
-</div>
+
 
 <!-- Sivutusohjaimet -->
 <div class="pagination-container">
@@ -66,3 +68,5 @@
   <span *ngFor="let page of pages()" class="page-number" [class.active]="currentPage === page" (click)="goToPage(page)">{{ page }}</span>
   <button [disabled]="currentPage === totalPages()" (click)="nextPage()">Seuraava</button>
 </div>
+</div>
+
