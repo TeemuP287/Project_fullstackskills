@@ -8,9 +8,12 @@
   <h3>Lisää Uusi Tehtävä</h3>
   <form (ngSubmit)="addNewTask()">
     <label for="addTitle">Otsikko:</label>
-    <input type="text" id="addTitle" [(ngModel)]="activeTask!.title" name="addTitle" required placeholder="Syötä otsikko" maxlength="120">
+    <input type="text" id="addTitle" [(ngModel)]="activeTask!.title" name="addTitle" required placeholder="Syötä otsikko" maxlength="120" (input)="updateRemainingCharacters()">
+    <small>{{ remainingCharacters }} merkkiä jäljellä</small>
+    <div *ngIf="titleError" class="error-message">{{ titleError }}</div>
     <label for="addDescription">Kuvaus:</label>
     <textarea id="addDescription" [(ngModel)]="activeTask!.description" name="addDescription" required placeholder="Syötä kuvaus"></textarea>
+    <div *ngIf="descriptionError" class="error-message">{{ descriptionError }}</div>
     <label for="addCompleted">Tehtävän tila:</label>
     <select id="addCompleted" [(ngModel)]="activeTask!.completed" name="addCompleted">
       <option [ngValue]="false">Keskeneräinen</option>
