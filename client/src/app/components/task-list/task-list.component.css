@@ -11,18 +11,26 @@
     width: 1200px; /* Kiinteä leveys */
     height: 1000px; /* Kiinteä korkeus */
     
-   
+    border: none; /* Nollaa reunukset */
+    padding: 0; /* Nollaa täyttö */
     /**width: auto; /* Automaattinen leveys */
+    overflow-y: scroll; /* Näyttää vierityspalkin tarvittaessa */
+  
 
-  /** margin: 0 auto;**/
-   max-width: 1200px;
-   max-height:none;
-   /**
-   padding: 10px;
-   flex-grow: 1;      /* Tämä auttaa venyttää kontaineria sivusuunnassa */
+    /** margin: 0 auto;**/
+    max-width: 1200px;
+    max-height:none;
+    /**
+    padding: 10px;
+    flex-grow: 1;      /* Tämä auttaa venyttää kontaineria sivusuunnassa */
 
-   flex-grow: 1; 
+    flex-grow: 1; 
 }
+
+    /**::ng-deep .container::-webkit-scrollbar {
+      display: none;  
+    }
+    **/
 
 
 .task-container {
@@ -295,6 +303,7 @@
   display: flex;
   justify-content: center;
   margin-top: 20px;
+  padding-bottom: 20px;
 }
 
 .pagination-container {
