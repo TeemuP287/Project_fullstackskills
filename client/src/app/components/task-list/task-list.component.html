@@ -1,39 +1,25 @@
-<div class="task-container" >
+<div class="task-container">
   <!-- Tehtävän lisääminen -->
   <button class="add-task-btn" (click)="showAddTaskForm()">Lisää tehtävä</button>
 
 
-
-
-
-<!-- Tehtävän muokkaus-/lisäyslomake (näytetään, kun on aktiivinen tehtävä tai lisäyspyyntö) -->
-<div *ngIf="isEditFormVisible && activeTask" class="edit-form-dialog">
-  <h3>{{ activeTask._id ? 'Muokkaa Tehtävää' : 'Lisää Uusi Tehtävä' }}</h3>
-
-  <form (ngSubmit)="activeTask._id ? updateTask() : addNewTask()">
-    <label for="title">Otsikko:</label>
-    <input type="text" id="title" [(ngModel)]="activeTask.title" name="title" required placeholder="Syötä otsikko" maxlength="120" (input)="updateRemainingCharacters()">
-    <small>{{ remainingCharacters }} merkkiä jäljellä</small>
-    <div *ngIf="titleError" class="error-message">{{ titleError }}</div>
-    
-    <label for="description">Kuvaus:</label>
-    <textarea id="description" [(ngModel)]="activeTask.description" name="description" required placeholder="Syötä kuvaus"></textarea>
-    <div *ngIf="descriptionError" class="error-message">{{ descriptionError }}</div>
-
-    <label for="completed">Tehtävän tila:</label>
-    <select id="completed" [(ngModel)]="activeTask.completed" name="completed">
+<!-- Tehtävän lisäämislomake -->
+<div *ngIf="isEditFormVisible && !activeTask?._id" class="edit-form-dialog">
+  <h3>Lisää Uusi Tehtävä</h3>
+  <form (ngSubmit)="addNewTask()">
+    <label for="addTitle">Otsikko:</label>
+    <input type="text" id="addTitle" [(ngModel)]="activeTask!.title" name="addTitle" required placeholder="Syötä otsikko" maxlength="120">
+    <label for="addDescription">Kuvaus:</label>
+    <textarea id="addDescription" [(ngModel)]="activeTask!.description" name="addDescription" required placeholder="Syötä kuvaus"></textarea>
+    <label for="addCompleted">Tehtävän tila:</label>
+    <select id="addCompleted" [(ngModel)]="activeTask!.completed" name="addCompleted">
       <option [ngValue]="false">Keskeneräinen</option>
       <option [ngValue]="true">Valmis</option>
     </select>
-
-    <button type="submit" class="save-btn">{{ activeTask._id ? 'Tallenna' : 'Lisää' }}</button>
+    <button type="submit" class="save-btn">Lisää</button>
     <button type="button" class="cancel-btn" (click)="cancelEdit()">Peruuta</button>
   </form>
 </div>
-
-
-
-
 
 
   <!-- Tehtävälista -->
@@ -46,19 +32,35 @@
                      (toggleSelection)="toggleTaskSelection($event)"
                      (hover)="hoverTask($event)">
       </app-task-item>
+
+      <!-- Muokkauslomake -->
+      <div *ngIf="isEditFormVisible && activeTask && activeTask._id === task._id" class="edit-form-dialog">
+        <h3>Muokkaa Tehtävää</h3>
+        <form (ngSubmit)="updateTask()">
+          <label for="editTitle">Otsikko:</label>
+          <input type="text" id="editTitle" [(ngModel)]="activeTask!.title" name="editTitle" required placeholder="Syötä otsikko" maxlength="120">
+          <label for="editDescription">Kuvaus:</label>
+          <textarea id="editDescription" [(ngModel)]="activeTask!.description" name="editDescription" required placeholder="Syötä kuvaus"></textarea>
+          <label for="editCompleted">Tehtävän tila:</label>
+          <select id="editCompleted" [(ngModel)]="activeTask!.completed" name="editCompleted">
+            <option [ngValue]="false">Keskeneräinen</option>
+            <option [ngValue]="true">Valmis</option>
+          </select>
+          <button type="submit" class="save-btn">Tallenna</button>
+          <button type="button" class="cancel-btn" (click)="cancelEdit()">Peruuta</button>
+        </form>
+      </div>
     </li>
   </ul>
 
+  
 
   <!-- Poista valitut tehtävät -painike -->
   <button class="delete-selected-btn" (click)="deleteSelectedTasksConfirmation()">Poista valitut</button>
 
   <!-- Poista kaikki tehtävät -painike -->
   <button class="delete-all-btn" (click)="deleteAllTasksConfirmation()">Poista kaikki</button>
-
 </div>
-
-
 
 <!-- Sivutusohjaimet -->
 <div class="pagination-container">
@@ -69,5 +71,3 @@
         (click)="goToPage(page)">{{ page }}</span>
   <button [disabled]="currentPage === totalPages()" (click)="nextPage()">Seuraava</button>
 </div>
-
-
