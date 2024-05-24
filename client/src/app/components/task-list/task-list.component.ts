@@ -101,9 +101,13 @@ export class TaskListComponent implements OnInit {
   }
 
   deleteSelectedTasksConfirmation(): void {
-    const confirmDelete = confirm('Haluatko varmasti poistaa kaikki valitut tehtävät?');
-    if (confirmDelete) {
-      this.deleteSelectedTasks();
+    if (this.selectedTasks.size === 0) {
+      alert('Valitse poistettavat tehtävät');
+    } else {
+      const confirmDelete = confirm('Haluatko varmasti poistaa kaikki valitut tehtävät?');
+      if (confirmDelete) {
+        this.deleteSelectedTasks();
+      }
     }
   }
 
@@ -187,12 +191,7 @@ export class TaskListComponent implements OnInit {
       } else {
         this.activeTask.updated_at = null;
       }
-      
-
-
-
-      
-      this.taskService.updateTask(this.activeTask).subscribe(() => {
+       this.taskService.updateTask(this.activeTask).subscribe(() => {
         this.getTasks();
         this.isEditFormVisible = false;
         this.activeTask = null;
