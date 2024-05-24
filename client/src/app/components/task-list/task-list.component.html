@@ -3,15 +3,13 @@
   <button class="add-task-btn" (click)="showAddTaskForm()">Lisää tehtävä</button>
 
   <!-- Tehtävän lisäämislomake -->
-  <div *ngIf="isEditFormVisible && !activeTask?._id" class="edit-form-dialog">
+  <div *ngIf="isEditFormVisible && (!activeTask?._id || activeTask?._id === '')" class="edit-form-dialog">
     <h3>Lisää Uusi Tehtävä</h3>
     <form (ngSubmit)="addNewTask()">
       <label for="addTitle">Otsikko:</label>
       <input type="text" id="addTitle" [(ngModel)]="activeTask!.title" name="addTitle" required placeholder="Syötä otsikko" maxlength="120" (input)="updateRemainingCharacters()">
       
-     <!-- <small>{{ remainingCharacters }} merkkiä jäljellä</small>-->
-      
-     <small>{{ 120 - (activeTask!.title ? activeTask!.title.length : 0) }} merkkiä jäljellä</small>
+      <small>{{ 120 - (activeTask!.title ? activeTask!.title.length : 0) }} merkkiä jäljellä</small>
       <div *ngIf="titleError" class="error-message">{{ titleError }}</div>
       <label for="addDescription">Kuvaus:</label>
       <textarea id="addDescription" [(ngModel)]="activeTask!.description" name="addDescription" required placeholder="Syötä kuvaus"></textarea>
@@ -25,8 +23,6 @@
       <button type="button" class="cancel-btn" (click)="cancelEdit()">Peruuta</button>
     </form>
   </div>
-
-
 
   <!-- Tehtävälista -->
   <ul class="task-list">
@@ -61,12 +57,10 @@
   <!-- Poista kaikki tehtävät -painike -->
   <button class="delete-all-btn" (click)="deleteAllTasksConfirmation()">Poista kaikki</button>
 
-
-<!-- Sivutusohjaimet -->
-<div class="pagination-container">
-  <button [disabled]="currentPage === 1" (click)="prevPage()">Edellinen</button>
-  <span *ngFor="let page of pages()" class="page-number" [class.active]="currentPage === page" (click)="goToPage(page)">{{ page }}</span>
-  <button [disabled]="currentPage === totalPages()" (click)="nextPage()">Seuraava</button>
+  <!-- Sivutusohjaimet -->
+  <div class="pagination-container">
+    <button [disabled]="currentPage === 1" (click)="prevPage()">Edellinen</button>
+    <span *ngFor="let page of pages()" class="page-number" [class.active]="currentPage === page" (click)="goToPage(page)">{{ page }}</span>
+    <button [disabled]="currentPage === totalPages()" (click)="nextPage()">Seuraava</button>
+  </div>
 </div>
-</div>
-
