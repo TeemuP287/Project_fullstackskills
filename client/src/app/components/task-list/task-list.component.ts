@@ -145,13 +145,20 @@ export class TaskListComponent implements OnInit {
   }
 
   showAddTaskForm(): void {
-    this.isEditFormVisible = true;
-    this.activeTask = Task.createDefaultTask();
+    if (this.activeTask && !this.activeTask._id) {
+      this.isEditFormVisible = !this.isEditFormVisible;
+    } else {
+      this.isEditFormVisible = true;
+      this.activeTask = Task.createDefaultTask();
+    }
   }
 
   setActiveTask(task: Task): void {
-    if (task) {
-      this.editClickSubject.next({ task });
+    if (this.activeTask && this.activeTask._id === task._id && this.isEditFormVisible) {
+      this.isEditFormVisible = false;
+    } else {
+      this.activeTask = { ...task };
+      this.isEditFormVisible = true;
     }
   }
 
