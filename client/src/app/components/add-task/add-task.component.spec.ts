@@ -1,6 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+// add-task.component.spec.ts
 
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing'; // Lisätty HttpClientTestingModule
 import { AddTaskComponent } from './add-task.component';
+import { TaskService } from '../../services/task.service'; // Lisätty TaskService
 
 describe('AddTaskComponent', () => {
   let component: AddTaskComponent;
@@ -8,7 +11,9 @@ describe('AddTaskComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddTaskComponent]
+      declarations: [AddTaskComponent],
+      imports: [HttpClientTestingModule], // Lisätty HttpClientTestingModule
+      providers: [TaskService] // Lisätty TaskService providers-taulukkoon
     })
     .compileComponents();
     
