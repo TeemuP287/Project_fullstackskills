@@ -108,7 +108,7 @@
   margin-bottom: 10px;
   max-width: 100%; /* Voit muuttaa tätä arvoa tarvittaessa */
   display: block;
-  overflow-x: auto; /* Lisää vaakasuuntainen vieritys, jos teksti menee yli */
+  overflow-x:scroll; /* Lisää vaakasuuntainen vieritys, jos teksti menee yli */
 }
 
 /* Piilota vierityspalkki WebKit-selaimissa (kuten Chrome ja Safari) */
