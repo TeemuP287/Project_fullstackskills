@@ -2,7 +2,7 @@
  
 MEAN Stack Task Management Application
 
-This is a task management application built on the MEAN (MongoDB, Express.js, Angular, Node.js) stack, allowing users to add, edit, delete, and mark tasks as completed, with a few extra features.
+This is a task management application built on the MEAN (MongoDB, Express.js, Angular, Node.js) stack, allowing users to add, edit, delete, and mark tasks as completed, with a few extra features. The project video can be found in the Project_video folder.
 
 
 ## Client
