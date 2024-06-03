@@ -1,14 +1,24 @@
 # Project_fullstackskills
+
+## Author
+
+Teemu Pernu
  
-MEAN Stack Task Management Application
+## MEAN Stack Task Management Application
 
-This is a task management application built on the MEAN (MongoDB, Express.js, Angular, Node.js) stack, allowing users to add, edit, delete, and mark tasks as completed, with a few extra features. The project video can be found in the Project_video folder.
+This is a task management application built on the MEAN (MongoDB, Express.js, Angular, Node.js) stack, allowing users to add, edit, delete, and mark tasks as completed, with a few extra features. 
 
+## Project video
+
+The project video can be found in the `Project_video` folder.
+
+## Learning diaries
+
+The learning diaries can be found in the `Learning diaries` folder.
 
 ## Client
 
 This project was generated with [Angular CLI](https://gitahub.com/angular/angular-cli) version 17.3.6.
-
 
 ## Code scaffolding
 
@@ -36,8 +46,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 Installation
 
-##
-Install Node.js
+## Install Node.js
+
 To install Node.js, follow these instructions:
 
 Download the installation package from the official Node.js website at nodejs.org and install the latest version.
@@ -54,35 +64,35 @@ node -v
 npm -v
 These commands should display the Node.js and npm versions.
 
-##
-Angular
+## Angular
+
 To install Angular using npm, run the following command:
 npm install -g @angular/cli
 
-##
-Express.js
+## Express.js
+
 Install Express.js using npm with the following command:
 npm install -g express
 
-##
-MongoDB
+## MongoDB
+
 Follow the official MongoDB instructions to install MongoDB.
 
-##
-Nodemon
+## Nodemon
+
 Nodemon helps in developing Node.js applications faster by automatically restarting the server whenever files are modified. You can install Nodemon using npm with the following command:
 npm install -g nodemon
 Getting Started
 Cloning the Repository
 Clone this repository to your local machine.
 
-##
-Client (Frontend)
+## Client (Frontend)
+
 Navigate to the client directory:
 cd client
 
-##
-Install Dependencies
+## Install Dependencies
+
 Install the required dependencies by running:
 npm install
 Starting the Angular Application
@@ -93,8 +103,8 @@ The application will be accessible at http://localhost:4200
 
 ---------------------
 
-##
-Server (Backend)
+## Server (Backend)
+
 Navigate to the server directory:
 cd server
 Install Dependencies
@@ -105,9 +115,8 @@ To start the Express.js server, run:
 npm run dev
 The Express.js server will be running at_ http://localhost:3000
 
+## Database
 
-##
-Database
 The application uses MongoDB as the database, with a collection named "tasks" containing the following fields:
 
 `_id`: Unique identifier for the task
@@ -120,7 +129,6 @@ The application uses MongoDB as the database, with a collection named "tasks" co
 
 Ensure MongoDB is running. By default, it should be accessible at: mongodb://localhost:27017/mydatabase
 
+## Accessing the API
 
-##
-Accessing the API
 You can access the tasks through the following endpoint: http://localhost:3000/api/tasks
