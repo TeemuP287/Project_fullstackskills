@@ -90,6 +90,7 @@ To start the Angular application, run:
 ng serve
 The application will be accessible at http://localhost:4200
 
+
 ---------------------
 
 ##
@@ -102,7 +103,8 @@ npm install
 Starting the Express.js Server
 To start the Express.js server, run:
 npm run dev
-The Express.js server will be running at http://localhost:3000
+The Express.js server will be running at_ http://localhost:3000
+
 
 ##
 Database
@@ -116,6 +118,9 @@ The application uses MongoDB as the database, with a collection named "tasks" co
 `updated_at`: Date of last task update
 `__v`: MongoDB versioning information
 
+Ensure MongoDB is running. By default, it should be accessible at: mongodb://localhost:27017/mydatabase
 
 
-
+##
+Accessing the API
+You can access the tasks through the following endpoint: http://localhost:3000/api/tasks
