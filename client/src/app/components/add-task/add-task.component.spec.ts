@@ -1,9 +1,10 @@
 // add-task.component.spec.ts
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing'; // Lisätty HttpClientTestingModule
+import { provideHttpClientTesting } from '@angular/common/http/testing'; // Lisätty HttpClientTestingModule
 import { AddTaskComponent } from './add-task.component';
 import { TaskService } from '../../services/task.service'; // Lisätty TaskService
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AddTaskComponent', () => {
   let component: AddTaskComponent;
@@ -11,10 +12,10 @@ describe('AddTaskComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AddTaskComponent],
-      imports: [HttpClientTestingModule], // Lisätty HttpClientTestingModule
-      providers: [TaskService] // Lisätty TaskService providers-taulukkoon
-    })
+    declarations: [AddTaskComponent],
+    imports: [],
+    providers: [TaskService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()] // Lisätty TaskService providers-taulukkoon
+})
     .compileComponents();
     
     fixture = TestBed.createComponent(AddTaskComponent);

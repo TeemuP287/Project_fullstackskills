@@ -2,15 +2,15 @@ import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { TaskListComponent } from './../app/components/task-list/task-list.component';
 import { TaskService } from './../app/services/task.service'; // Lisätty TaskService
-import { HttpClientModule } from '@angular/common/http'; // Lisätty HttpClientModule
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'; // Lisätty HttpClientModule
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AppComponent, TaskListComponent],
-      imports: [HttpClientModule], // Lisätty HttpClientModule importsiin
-      providers: [TaskService] // Lisätty TaskService providersiin
-    }).compileComponents();
+    declarations: [AppComponent, TaskListComponent],
+    imports: [],
+    providers: [TaskService, provideHttpClient(withInterceptorsFromDi())] // Lisätty TaskService providersiin
+}).compileComponents();
   });
 
   it('should create the app', () => {

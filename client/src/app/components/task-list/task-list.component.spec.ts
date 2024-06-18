@@ -1,9 +1,10 @@
 // task-list.component.spec.ts
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing'; // Lisätty HttpClientTestingModule
+import { provideHttpClientTesting } from '@angular/common/http/testing'; // Lisätty HttpClientTestingModule
 import { TaskListComponent } from './task-list.component';
 import { TaskService } from '../../services/task.service'; // Lisätty TaskService
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('TaskListComponent', () => {
   let component: TaskListComponent;
@@ -11,10 +12,10 @@ describe('TaskListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TaskListComponent],
-      imports: [HttpClientTestingModule], // Lisätty HttpClientTestingModule
-      providers: [TaskService] // Lisätty TaskService providers-taulukkoon
-    })
+    declarations: [TaskListComponent],
+    imports: [],
+    providers: [TaskService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()] // Lisätty TaskService providers-taulukkoon
+})
     .compileComponents();
     
     fixture = TestBed.createComponent(TaskListComponent);
